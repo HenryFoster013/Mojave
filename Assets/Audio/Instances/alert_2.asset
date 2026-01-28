@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b55afa5bb01095c44b468e3200f53afc, type: 3}
+  m_Name: alert_2
+  m_EditorClassIdentifier: 
+  Name: alert_2
+  BaseClip: {fileID: 8300000, guid: d5e4e731cd2b1144b845c63728394f85, type: 3}
+  ClipRange: []
+  Mixer: {fileID: -3515495009596883234, guid: d22302a6a87ae604e8d6db664360e3a8, type: 2}
+  BasePitch: 1
+  PitchVariation: 0
+  BaseVolume: 1
+  VolumeVariation: 0
+  _3D: 0
+  Radius: 0

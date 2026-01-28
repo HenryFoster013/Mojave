@@ -1,0 +1,78 @@
+using UnityEngine;
+using UnityEngine.Audio;
+
+public static class GenericUtils{
+
+    public static void DisableAll(ref GameObject[] gameobjects){
+        foreach(GameObject g in gameobjects)
+            g.SetActive(false);
+    }
+
+    public static void LerpToZero(ref Vector3 vector, ref float speed){
+        vector = Vector3.Lerp(vector, Vector3.zero, Time.deltaTime * speed);
+        MinimiseLerpToZero(ref vector);
+    }
+    
+    public static void MinimiseLerpToZero(ref Vector3 vector){
+        if(vector.magnitude < 0.001f)
+            vector = vector * 0f;
+    }
+
+    public static string[] TextToArray(TextAsset text_asset){
+        return text_asset.text.Split(new[] {'\n'}, System.StringSplitOptions.None);
+    } 
+
+    public static int FlipFlopNegation(){
+        if(Random.Range(0, 2) == 0)
+            return -1;
+        return 1;
+    }
+}
+
+public static class SoundUtils{
+    
+    // SOUND EFFECTS //
+    
+    public static void PlaySFX(string name, SoundEffectLookupSO SoundLookup){SpawnSound(SoundLookup.GetSFX(name), Vector3.zero);}
+    public static void PlaySFX(string name, Vector3 position, SoundEffectLookupSO SoundLookup){SpawnSound(SoundLookup.GetSFX(name), position);}
+    public static void PlaySFX(SoundEffectSO sound){SpawnSound(sound, Vector3.zero);}
+    public static void PlaySFX(SoundEffectSO sound, Vector3 position){SpawnSound(sound, position);}
+
+    public static void SpawnSound(SoundEffectSO sound, Vector3 position){
+        if(sound == null)
+            return;
+
+        GameObject new_sfx = new GameObject(sound.GetName());
+        new_sfx.transform.position = position;
+        
+        AudioSource asrc = new_sfx.AddComponent<AudioSource>();
+        asrc.clip = sound.Clip();
+        asrc.volume = sound.GetVolume();
+        asrc.pitch = sound.GetPitch();
+        asrc.outputAudioMixerGroup  = sound.GetMixer();
+
+        if(sound.Is3D()){
+            asrc.spatialBlend = 1.0f;
+            asrc.minDistance = 0.001f;
+            asrc.maxDistance = sound.GetRadius();
+            asrc.rolloffMode = AudioRolloffMode.Linear;
+            asrc.dopplerLevel = 0f;
+        }
+
+        asrc.Play();
+
+        DestroyOverTime deletor = new_sfx.AddComponent<DestroyOverTime>();
+        deletor.StartDeletion(asrc.clip.length + 1f);
+        GameObject.DontDestroyOnLoad(new_sfx);
+    }
+
+    public static float FloatToDecibel(float input){
+        input = Mathf.Clamp(input, 0f, 1f);
+        input = Mathf.Clamp(Mathf.Log10(input) * 20f, -80f, 0f);
+        return input;
+    }
+
+    // LOOKUPS //
+
+    public static SoundEffectLookupSO GetSFXLookup(){return Resources.Load<SoundEffectLookupSO>("_ SFX Lookup");}
+}
