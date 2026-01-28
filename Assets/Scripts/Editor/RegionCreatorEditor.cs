@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class RegionCreatorEditor : Editor{
 
-    [MenuItem("Assets/Create Regions from Selected Folders", false, 10)]
+    /*[MenuItem("Assets/Create Regions from Selected Folders", false, 10)]
     public static void CreateRegionsFromFolders(){
 
         Object[] selectedObjects = Selection.GetFiltered<Object>(SelectionMode.Assets);        
@@ -44,7 +44,7 @@ public class RegionCreatorEditor : Editor{
         AssetDatabase.Refresh();
         
         Debug.Log($"Successfully created {createdCount} RegionSO(s).");
-    }
+    }*/
 
     [MenuItem("Assets/Create Regions from Selected Folders", true)]
     public static bool ValidateCreateRegionsFromFolders()
