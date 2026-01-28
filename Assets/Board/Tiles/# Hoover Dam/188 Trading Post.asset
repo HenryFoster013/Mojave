@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb4f33b2cfaa40a4869f000756744bd, type: 3}
+  m_Name: 188 Trading Post
+  m_EditorClassIdentifier: 
+  Name: 188 Trading Post
+  Source: {fileID: 2800000, guid: 535984a1e3814d2aaac598e200e9e5b3, type: 3}
+  Region: {fileID: 11400000, guid: 3781d98e9b2cb79238bd4a443dea8d36, type: 2}
+  Colour:
+    serializedVersion: 2
+    rgba: 4294959872
+  MedianX: 0.6676952
+  MedianY: 0.5250914

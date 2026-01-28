@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 765a8adba9ed232168d0fb08b7517020, type: 3}
+  m_Name: '# Nellis'
+  m_EditorClassIdentifier: 
+  Territories:
+  - {fileID: 11400000, guid: d22a43020c5eb4750be7fcd5cd9f193d, type: 2}
+  - {fileID: 11400000, guid: 19884ea92251ce49382d48ceb16cc12b, type: 2}
+  - {fileID: 11400000, guid: 24eeb42558078200794d7a963681dc27, type: 2}
+  - {fileID: 11400000, guid: 31a7a87fd15b49498b0915566130474d, type: 2}
+  - {fileID: 11400000, guid: 0ac86fb5590aa01c286bb710a29e7b85, type: 2}
+  - {fileID: 11400000, guid: 7df27f05ffd7f0eafb3650a38bf9cca6, type: 2}
+  - {fileID: 11400000, guid: bc1516867d28f955abec13cec01d80dc, type: 2}
+  - {fileID: 11400000, guid: 025d9b96680cc0e5a9964e589109d70e, type: 2}
+  - {fileID: 11400000, guid: fe2110b3aeb1f8bf29c757a0c0674fc7, type: 2}
+  - {fileID: 11400000, guid: 70293ffa01e570ae482ea25f37ed8594, type: 2}
+  Colour: {r: 1, g: 0.4292453, b: 0.90140647, a: 1}

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 600052fc21b84c9e38dd06a7b5ebc040, type: 3}
+  m_Name: New Vegas
+  m_EditorClassIdentifier: 
+  Regions:
+  - {fileID: 11400000, guid: 4181ddf16144a67a79f0eb1c5eb23ffd, type: 2}
+  - {fileID: 11400000, guid: 3781d98e9b2cb79238bd4a443dea8d36, type: 2}
+  - {fileID: 11400000, guid: d53ac42641bac9a799500562fb06bf41, type: 2}
+  - {fileID: 11400000, guid: 9cba6b327603af66ea9cd0b680deb44e, type: 2}
+  - {fileID: 11400000, guid: d07f189d737683b77a50a4c5407c53f6, type: 2}
+  - {fileID: 11400000, guid: e927f487d9e61f62d877330e8afe5f72, type: 2}
+  - {fileID: 11400000, guid: 000cdded7a98b2be39468ea3035d1b7c, type: 2}
+  - {fileID: 11400000, guid: 6fdc3a40f1a58f5209ae332e8ee25738, type: 2}
+  - {fileID: 11400000, guid: ec21752b6194557cf8b25a80e868ac5e, type: 2}
+  - {fileID: 11400000, guid: 79636c4e54d687899a81df715edc96df, type: 2}
+  - {fileID: 11400000, guid: 2be098250a6321008b78b85e29c3f695, type: 2}
+  Base: {fileID: 2800000, guid: f117f72ad81c2f41b94926b079823679, type: 3}
+  Overlay: {fileID: 2800000, guid: 67b3789f12604186dbb3f33830855cd2, type: 3}
+  Coloured: {fileID: 2800000, guid: de44dcec01a01bc419d8c635bb035cdd, type: 3}

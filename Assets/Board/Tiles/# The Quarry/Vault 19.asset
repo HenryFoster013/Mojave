@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb4f33b2cfaa40a4869f000756744bd, type: 3}
+  m_Name: Vault 19
+  m_EditorClassIdentifier: 
+  Name: Vault 19
+  Source: {fileID: 2800000, guid: 18f7b896658c06b7a9597d8f146d6e48, type: 3}
+  Region: {fileID: 11400000, guid: ec21752b6194557cf8b25a80e868ac5e, type: 2}
+  Colour:
+    serializedVersion: 2
+    rgba: 4287954688
+  MedianX: 0.41995698
+  MedianY: 0.5278305

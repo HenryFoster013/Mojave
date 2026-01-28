@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 765a8adba9ed232168d0fb08b7517020, type: 3}
+  m_Name: '# Vegas Ruins'
+  m_EditorClassIdentifier: 
+  Territories:
+  - {fileID: 11400000, guid: 8322782269f471713a9cd181b5fdc537, type: 2}
+  - {fileID: 11400000, guid: d9a453c630b9c2f79ae1c69005ee5078, type: 2}
+  - {fileID: 11400000, guid: aac88ed7517db0933a53f426196765d2, type: 2}
+  - {fileID: 11400000, guid: 440f8c8124a4bc481b08a0e65b3435d1, type: 2}
+  - {fileID: 11400000, guid: c8c28a5589b6080b88a1692c33d8a67a, type: 2}
+  - {fileID: 11400000, guid: 827f9193568900b5ba123ac44f02ac00, type: 2}
+  - {fileID: 11400000, guid: 101b8b651f4ab898d9d6c1b27615884d, type: 2}
+  - {fileID: 11400000, guid: 436772efc199fe578adcd50d7ae0b2d4, type: 2}
+  - {fileID: 11400000, guid: 938c5c7c8e78f9b6497a05107f9542c5, type: 2}
+  - {fileID: 11400000, guid: 00e12d326137826658f4b7728801c0c9, type: 2}
+  - {fileID: 11400000, guid: a7be0d5d6ca5b3ebc99e2818b87d2ef4, type: 2}
+  Colour: {r: 0.6132076, g: 0.26247022, b: 0, a: 1}

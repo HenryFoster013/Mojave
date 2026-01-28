@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb4f33b2cfaa40a4869f000756744bd, type: 3}
+  m_Name: Ranger Station Echo
+  m_EditorClassIdentifier: 
+  Name: Ranger Station Echo
+  Source: {fileID: 2800000, guid: 9db54990347098bdfacd517f6b18d136, type: 3}
+  Region: {fileID: 11400000, guid: 6fdc3a40f1a58f5209ae332e8ee25738, type: 2}
+  Colour:
+    serializedVersion: 2
+    rgba: 4278222591
+  MedianX: 0.759995
+  MedianY: 0.20035054

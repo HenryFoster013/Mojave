@@ -1,0 +1,1 @@
+This is a project designed to create an online version of my custom RISK board. I had a lot of fun playing the board at home with friends and inspired to keep the games going after we moved out for University, I've begun to work on this project.

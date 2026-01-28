@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 765a8adba9ed232168d0fb08b7517020, type: 3}
+  m_Name: '# Nipton'
+  m_EditorClassIdentifier: 
+  Territories:
+  - {fileID: 11400000, guid: f689d53147826d16e8d72f2ad8cd1475, type: 2}
+  - {fileID: 11400000, guid: 021909e3f271c2b829460114c786f6f6, type: 2}
+  - {fileID: 11400000, guid: e886ab938d7fbbf2bb04e88d6d091a56, type: 2}
+  - {fileID: 11400000, guid: 46027c42e86f049d386260b0b529266f, type: 2}
+  - {fileID: 11400000, guid: 29f674910204ca111a00a2568f9adbaf, type: 2}
+  - {fileID: 11400000, guid: 323fc775ed00be558857ed58a44bfd24, type: 2}
+  - {fileID: 11400000, guid: 560d0a09677bc91d4bc432101c8a2fa8, type: 2}
+  - {fileID: 11400000, guid: 9abd3ee3636dc4ab388d5c5125c2e11c, type: 2}
+  - {fileID: 11400000, guid: e0433b3710dfd142ea1d9600d4b86df4, type: 2}
+  - {fileID: 11400000, guid: cc2427f148f197712bd7395a40c1ff8d, type: 2}
+  - {fileID: 11400000, guid: 9e14707d64a330de5a5baf9e30b8d159, type: 2}
+  - {fileID: 11400000, guid: f4101e112aac5088aab1c7f287e71851, type: 2}
+  - {fileID: 11400000, guid: 020e4a4732325ea818fdd54be443501b, type: 2}
+  - {fileID: 11400000, guid: c813aa172d89bcac0858ff3b80118280, type: 2}
+  Colour: {r: 0, g: 0.14067984, b: 1, a: 1}

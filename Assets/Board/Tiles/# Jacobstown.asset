@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 765a8adba9ed232168d0fb08b7517020, type: 3}
+  m_Name: '# Jacobstown'
+  m_EditorClassIdentifier: 
+  Territories:
+  - {fileID: 11400000, guid: 49d8fadff562cf46bb7c80192eaa25b5, type: 2}
+  - {fileID: 11400000, guid: 722ab77815d9d71f895ed4fff2a80bbc, type: 2}
+  - {fileID: 11400000, guid: 7cfb371a0e5e49588ba38a9a7d0e56a1, type: 2}
+  - {fileID: 11400000, guid: 3905b72d1cb487259ae124c1fd7670ff, type: 2}
+  - {fileID: 11400000, guid: a380d47e2f7ff70288a795c693bb6db7, type: 2}
+  - {fileID: 11400000, guid: 6eb2954683560545ba7a0baf8b06f5b2, type: 2}
+  - {fileID: 11400000, guid: 2f9c2337ede3e9dd3aa28f38733186ed, type: 2}
+  Colour: {r: 0.6988883, g: 0, b: 1, a: 1}

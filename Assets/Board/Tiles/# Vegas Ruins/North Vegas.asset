@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb4f33b2cfaa40a4869f000756744bd, type: 3}
+  m_Name: North Vegas
+  m_EditorClassIdentifier: 
+  Name: North Vegas
+  Source: {fileID: 2800000, guid: dfdcffc301c928400939d989268a0a25, type: 3}
+  Region: {fileID: 11400000, guid: 2be098250a6321008b78b85e29c3f695, type: 2}
+  Colour:
+    serializedVersion: 2
+    rgba: 4294836479
+  MedianX: 0.48475268
+  MedianY: 0.8079571

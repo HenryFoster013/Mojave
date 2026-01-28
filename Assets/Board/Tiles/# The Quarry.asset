@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 765a8adba9ed232168d0fb08b7517020, type: 3}
+  m_Name: '# The Quarry'
+  m_EditorClassIdentifier: 
+  Territories:
+  - {fileID: 11400000, guid: 42aaf41a493998dbf91fe186d636c56e, type: 2}
+  - {fileID: 11400000, guid: 1948b3a33fff81505b69cf88b4fe1898, type: 2}
+  - {fileID: 11400000, guid: cd7782e6e6c46233fa0dd3271c0ff710, type: 2}
+  - {fileID: 11400000, guid: ae94e72ae9bf2ef559f9891ebec7156b, type: 2}
+  - {fileID: 11400000, guid: 21991f760975a75419cc711f1cd63309, type: 2}
+  - {fileID: 11400000, guid: a030424b0689932858192a5f796c5457, type: 2}
+  - {fileID: 11400000, guid: ec4e81719a8603193be19de6c5cb5017, type: 2}
+  - {fileID: 11400000, guid: e84f240b97e9d2febb193e570a011200, type: 2}
+  - {fileID: 11400000, guid: 35c21d903c1ac5a5e84dbce749ec152d, type: 2}
+  - {fileID: 11400000, guid: f3fafbfdc5ba8836ca2f77030d0bf925, type: 2}
+  - {fileID: 11400000, guid: fbf2d0da9d8afad00b326e757e76d5ab, type: 2}
+  - {fileID: 11400000, guid: 66b932e0c6fc78ddba0de6e70ca6ec79, type: 2}
+  - {fileID: 11400000, guid: fd8825783fe1b9770b3c2d9075872d2b, type: 2}
+  - {fileID: 11400000, guid: c98d1e11aadf878bda5eacbb43cfaa70, type: 2}
+  - {fileID: 11400000, guid: af5cfd0b8a371ebe3bedf1ee16a69f22, type: 2}
+  - {fileID: 11400000, guid: 5eb304916aed9228fa8be952403378a5, type: 2}
+  Colour: {r: 1, g: 0.41492444, b: 0, a: 1}

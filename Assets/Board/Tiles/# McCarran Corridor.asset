@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 765a8adba9ed232168d0fb08b7517020, type: 3}
+  m_Name: '# McCarran Corridor'
+  m_EditorClassIdentifier: 
+  Territories:
+  - {fileID: 11400000, guid: 0f079459f1a02f75bab00c6cad923bf5, type: 2}
+  - {fileID: 11400000, guid: 3fc233fe01313d1e1a6ff1360e0f9216, type: 2}
+  - {fileID: 11400000, guid: 6fd2945abbf5a0d7aa96d2dded033ca0, type: 2}
+  - {fileID: 11400000, guid: 2d3629abf06a0e799b4638d9d47b4d61, type: 2}
+  - {fileID: 11400000, guid: ddb056171ba8b0deea1bf09b6a8eab56, type: 2}
+  - {fileID: 11400000, guid: a89714fb8844b6556bd2086af5fcf669, type: 2}
+  - {fileID: 11400000, guid: 40ffe64527d14f0e6aa063bb18645a4e, type: 2}
+  - {fileID: 11400000, guid: dbe034b618aee91408f03edd161facac, type: 2}
+  - {fileID: 11400000, guid: c0a8e5257f25e1905a41959f5b5117ae, type: 2}
+  - {fileID: 11400000, guid: bb25f11af4f292f77a7baed88647943d, type: 2}
+  - {fileID: 11400000, guid: 7194860b5cf0c66e39c3ac4c83914dec, type: 2}
+  - {fileID: 11400000, guid: 007cafff19cf51ca5a1776cd63656e10, type: 2}
+  Colour: {r: 0.2688679, g: 0.634781, b: 1, a: 1}

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 765a8adba9ed232168d0fb08b7517020, type: 3}
+  m_Name: '# Hoover Dam'
+  m_EditorClassIdentifier: 
+  Territories:
+  - {fileID: 11400000, guid: 7cc870061ee0f5491a105dc3f5d79eb0, type: 2}
+  - {fileID: 11400000, guid: c184657204042d06aa90394121e214b6, type: 2}
+  - {fileID: 11400000, guid: 24612ba6f24234829ac560afca9328cf, type: 2}
+  - {fileID: 11400000, guid: 8fa6d628c4becd824a98bd49fabf857d, type: 2}
+  - {fileID: 11400000, guid: b193f48d0c445793883e9ad5c43a2821, type: 2}
+  - {fileID: 11400000, guid: cc4f01ebf385983118ed59b6a87924ff, type: 2}
+  - {fileID: 11400000, guid: 4b08b1adb8da0972f944d9509f708518, type: 2}
+  - {fileID: 11400000, guid: 71972d58733516c479103abb64d30e2b, type: 2}
+  - {fileID: 11400000, guid: 29075c9c1d0ae0f6799e650e45272256, type: 2}
+  - {fileID: 11400000, guid: 53080dd7974101dd0b5ea906bab05242, type: 2}
+  - {fileID: 11400000, guid: a1305b629740b07ebb068e1088c0f7ee, type: 2}
+  - {fileID: 11400000, guid: 495a2e6f672453541a89f5f9306a16e2, type: 2}
+  - {fileID: 11400000, guid: 25e1ed6933378d8069835026d2d9b21f, type: 2}
+  Colour: {r: 0, g: 0.6132076, b: 0.21320781, a: 1}

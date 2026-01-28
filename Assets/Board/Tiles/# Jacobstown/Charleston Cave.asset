@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb4f33b2cfaa40a4869f000756744bd, type: 3}
+  m_Name: Charleston Cave
+  m_EditorClassIdentifier: 
+  Name: Charleston Cave
+  Source: {fileID: 2800000, guid: eb626446fdced1b81a115484ba3ca57c, type: 3}
+  Region: {fileID: 11400000, guid: d53ac42641bac9a799500562fb06bf41, type: 2}
+  Colour:
+    serializedVersion: 2
+    rgba: 4284154111
+  MedianX: 0.19803631
+  MedianY: 0.7626498

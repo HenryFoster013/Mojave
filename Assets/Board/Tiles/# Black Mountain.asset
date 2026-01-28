@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 765a8adba9ed232168d0fb08b7517020, type: 3}
+  m_Name: '# Black Mountain'
+  m_EditorClassIdentifier: 
+  Territories:
+  - {fileID: 11400000, guid: d291f1c167dc8a53cb57218c6be16b39, type: 2}
+  - {fileID: 11400000, guid: 0fb57e4dd95907f1181aa6930feb0c92, type: 2}
+  - {fileID: 11400000, guid: 7d7c7ce44c42a8997acde38e51197e24, type: 2}
+  - {fileID: 11400000, guid: 9bb14349aa056deb49590e5f84f16cf7, type: 2}
+  - {fileID: 11400000, guid: e77053c7a49b40191a2aff543a93f0ac, type: 2}
+  - {fileID: 11400000, guid: 0a537a9aa29e8f24786027abe505ba1f, type: 2}
+  - {fileID: 11400000, guid: b0be96c4ac1608c1fb3742afe99e8ce2, type: 2}
+  - {fileID: 11400000, guid: c1a18c3b53914c4f98b57ba9710e1edc, type: 2}
+  - {fileID: 11400000, guid: 1c144ed805f4725d399ede1d23f829bc, type: 2}
+  - {fileID: 11400000, guid: f292d49124525b3efba44fc4b1bd4f4b, type: 2}
+  - {fileID: 11400000, guid: 4bdb7ef118a6827848b96ebd32cd4e88, type: 2}
+  - {fileID: 11400000, guid: dd458b4ab03f9ace983e3abb9d2c61fc, type: 2}
+  - {fileID: 11400000, guid: f06bf1e20dc2d40c0a20b8dcee918abd, type: 2}
+  - {fileID: 11400000, guid: a47249b24abfb7b909293c04aafea604, type: 2}
+  - {fileID: 11400000, guid: f65d99ffcbeb82b1ab5dc0cd898464c8, type: 2}
+  - {fileID: 11400000, guid: 65522dff327774cf6a06bb3c28dbbfe1, type: 2}
+  Colour: {r: 1, g: 0.8183497, b: 0, a: 1}
