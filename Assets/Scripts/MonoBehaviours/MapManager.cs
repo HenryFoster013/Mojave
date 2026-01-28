@@ -21,6 +21,7 @@ public class MapManager : MonoBehaviour
     RenderTexture rendered_territories;
     List<TerritoryInstance> territory_instances = new List<TerritoryInstance>();
     bool nametags_active;
+    float nametag_rotation = 0f;
     
     // SETUP //
 
@@ -85,9 +86,22 @@ public class MapManager : MonoBehaviour
     public void ToggleNametags(){
         nametags_active = !nametags_active;
         NametagHook.gameObject.SetActive(nametags_active);
-        if(nametags_active)
+        if(nametags_active){
             PlaySFX("pipboy_light_on", SoundEffectLookup);
+            RotateTags();
+        }
         else
             PlaySFX("pipboy_light_off", SoundEffectLookup);
+    }
+
+    public void UpdateNametagRotation(float new_rot){
+        nametag_rotation = -new_rot;
+        if(nametags_active)
+            RotateTags();
+    }
+
+    void RotateTags(){
+        foreach(Transform t in NametagHook)
+            t.localEulerAngles = new Vector3(0f, 0f, nametag_rotation);
     }
 }
