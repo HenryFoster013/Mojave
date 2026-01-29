@@ -17,6 +17,8 @@ namespace RISK_Utils
             Dirty();
         }
 
+        // Setters //
+
         public void SetOwner(PlayerFactionSO new_faction){
             if(owner == new_faction)
                 return;
@@ -24,17 +26,17 @@ namespace RISK_Utils
             Dirty();
         }
 
-        public Color GetRegionColour(){
-            return definition.Region.Colour;
-        }
+        public void Dirty(){dirty = true;}
+        public void Clean(){dirty = false;}
 
-        public Color GetFactionColour(){
+        // Getters //
+
+        public Color RegionColour(){return definition.Region.Colour;}
+        public Color FactionColour(){
             if(owner == null)
                 return Color.white;
             return owner.Colour;
         }
-
-        public void Dirty(){dirty = true;}
-        public void Clean(){dirty = false;}
+        public string Name(){return definition.name;}
     }
 }

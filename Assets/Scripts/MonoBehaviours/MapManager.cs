@@ -20,9 +20,9 @@ public class MapManager : MonoBehaviour
 
     RenderTexture rendered_territories, rendered_regions;
     List<TerritoryInstance> territory_instances = new List<TerritoryInstance>();
-    float nametag_rotation = 0f;
+    List<NametagController> nametags = new List<NametagController>();
 
-    bool render_mode; // false == Players, true == Continents
+    bool render_mode; // false == Players, true == Regions
     
     // SETUP //
 
@@ -46,10 +46,9 @@ public class MapManager : MonoBehaviour
 
     public void SetupMap(){
         render_mode = false;
-        NametagHook.gameObject.SetActive(render_mode);
         territory_instances = MapData.GenerateInstances();
-        CreateNameTags();
         CreateRegionMap();
+        CreateNameTags();
         CheckDirtyInstances();
     }
 
@@ -61,11 +60,13 @@ public class MapManager : MonoBehaviour
     void CreateNameTags(){
         foreach(TerritoryInstance territory in territory_instances){
             GameObject tag = GameObject.Instantiate(NametagPrefab);
-            tag.SetActive(true);
             tag.transform.SetParent(NametagHook);
-            tag.name = territory.definition.Name;
             tag.transform.localPosition = new Vector3(territory.definition.MedianX, territory.definition.MedianY, 0f);
-            tag.GetComponent<NametagController>().SetName(territory.definition.Name);
+
+            NametagController tag_controller = tag.GetComponent<NametagController>();
+            tag_controller.SetName(territory.Name());
+            tag_controller.UpdateMode(render_mode);
+            nametags.Add(tag_controller);
         }
     }
 
@@ -87,9 +88,9 @@ public class MapManager : MonoBehaviour
     public void UpdateTerritory(TerritoryInstance territory, bool region_mode){
 
         RenderTexture render_to = rendered_territories;
-        Color set_color = territory.GetFactionColour();
+        Color set_color = territory.FactionColour();
         if(region_mode){
-            set_color = territory.GetRegionColour();
+            set_color = territory.RegionColour();
             render_to = rendered_regions;
         }
 
@@ -117,7 +118,8 @@ public class MapManager : MonoBehaviour
             return;
         
         render_mode = new_mode;
-        NametagHook.gameObject.SetActive(render_mode);
+        foreach(NametagController tag in nametags)
+            tag.UpdateMode(render_mode);
 
         if(render_mode){
             PlaySFX("pipboy_light_on", SoundEffectLookup);
@@ -130,12 +132,7 @@ public class MapManager : MonoBehaviour
     }
 
     public void UpdateNametagRotation(float new_rot){
-        nametag_rotation = -new_rot;
-        RotateTags();
-    }
-
-    void RotateTags(){
-        foreach(Transform t in NametagHook)
-            t.localEulerAngles = new Vector3(0f, 0f, nametag_rotation);
+        foreach(NametagController tag in nametags)
+            tag.UpdateRotation(new_rot);
     }
 }

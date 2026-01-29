@@ -67,20 +67,9 @@ public class CameraController : MonoBehaviour
     void SetTargetRotations(){
         normalised_zoom = target_zoom - minimum_height;
         target_rotation = standard_rotation;
-        target_pivot += Input.GetAxis("Rotation Axis") * rotation_speed * Time.deltaTime;
-        
-        if(target_zoom < median_bound)
-            target_rotation = Mathf.Lerp(bottom_rotation, standard_rotation, normalised_zoom / normalised_median);
-        else
-            target_rotation = Mathf.Lerp(standard_rotation, flattened_rotation, (target_zoom - median_bound) / (maximal_height - median_bound));
-    }
 
-    void SetTargetPositions(){
-
-        float speed_mod = base_speed;
-        if(Input.GetKey(KeyCode.LeftShift)){
-            speed_mod = sprint_speed;
-        }
+        if(Input.GetKey(KeyCode.LeftShift))
+            target_pivot += Input.GetAxis("Rotation Axis") * rotation_speed * Time.deltaTime;
         else{
             if(Input.GetKeyDown(KeyCode.DownArrow)){
                 target_pivot = 0f;
@@ -96,6 +85,19 @@ public class CameraController : MonoBehaviour
             }
         }
         
+        if(target_zoom < median_bound)
+            target_rotation = Mathf.Lerp(bottom_rotation, standard_rotation, normalised_zoom / normalised_median);
+        else
+            target_rotation = Mathf.Lerp(standard_rotation, flattened_rotation, (target_zoom - median_bound) / (maximal_height - median_bound));
+    }
+
+    void SetTargetPositions(){
+
+        float speed_mod = base_speed;
+        if(Input.GetKey(KeyCode.LeftShift)){
+            speed_mod = sprint_speed;
+        }
+        
         speed_mod = speed_mod * ((normalised_zoom / normalised_maximum) + 0.15f); 
         target_position += ((MovementPivot.forward * Input.GetAxis("Vertical")) + (MovementPivot.right * Input.GetAxis("Horizontal"))) * speed_mod * Time.deltaTime;
         
@@ -108,6 +110,6 @@ public class CameraController : MonoBehaviour
         ZoomPivot.localPosition = Vector3.Lerp(ZoomPivot.localPosition, Vector3.up * target_zoom, Time.deltaTime * 10f);
         RotationPivot.localEulerAngles = new Vector3(Mathf.Lerp(RotationPivot.eulerAngles.x, target_rotation, Time.deltaTime * 3f), 0f, 0f);
         MovementPivot.localEulerAngles = new Vector3(0f, Mathf.LerpAngle(MovementPivot.eulerAngles.y, target_pivot, Time.deltaTime * 6f), 0f);
-        Map.UpdateNametagRotation(MovementPivot.eulerAngles.y);
+        //Map.UpdateNametagRotation(MovementPivot.eulerAngles.y);
     }
 }
