@@ -18,32 +18,44 @@ public class MapManager : MonoBehaviour
     [SerializeField] GameObject NametagPrefab;
     [SerializeField] Transform NametagHook;
 
-    RenderTexture rendered_territories;
+    RenderTexture rendered_territories, rendered_regions;
     List<TerritoryInstance> territory_instances = new List<TerritoryInstance>();
-    bool nametags_active;
     float nametag_rotation = 0f;
+
+    bool render_mode; // false == Players, true == Continents
     
     // SETUP //
 
     void Start(){
-        CreateRenderedTexture();
+        SetupRenders();
         SetupMap();
     }
 
-    void CreateRenderedTexture(){
-        rendered_territories = new RenderTexture(MapData.Coloured.width, MapData.Coloured.height, 0);
-        rendered_territories.filterMode = FilterMode.Point;
-        rendered_territories.Create();
-        Graphics.Blit(Texture2D.whiteTexture, rendered_territories);
+    void SetupRenders(){
+        CreateRenderedTexture(ref rendered_territories);
+        CreateRenderedTexture(ref rendered_regions);
         DisplayMaterial.SetTexture("_TileColours", rendered_territories);
     }
 
+    void CreateRenderedTexture(ref RenderTexture render_to){
+        render_to = new RenderTexture(MapData.Coloured.width, MapData.Coloured.height, 0);
+        render_to.filterMode = FilterMode.Point;
+        render_to.Create();
+        Graphics.Blit(Texture2D.whiteTexture, render_to);
+    }
+
     public void SetupMap(){
-        nametags_active = true;
-        NametagHook.gameObject.SetActive(nametags_active);
+        render_mode = false;
+        NametagHook.gameObject.SetActive(render_mode);
         territory_instances = MapData.GenerateInstances();
         CreateNameTags();
+        CreateRegionMap();
         CheckDirtyInstances();
+    }
+
+    void CreateRegionMap(){
+        foreach(TerritoryInstance territory in territory_instances)
+            UpdateTerritory(territory, true);
     }
 
     void CreateNameTags(){
@@ -57,47 +69,69 @@ public class MapManager : MonoBehaviour
         }
     }
 
+    void MarkAllDirty(){
+        foreach(TerritoryInstance territory in territory_instances)
+            territory.Dirty();
+    }
+
     // UPDATING //
     
     void CheckDirtyInstances(){
         foreach(TerritoryInstance territory in territory_instances){
-            if(territory.dirty)
-                UpdateTerritory(territory, territory.definition.Region.Colour);
+            if(territory.dirty){
+                UpdateTerritory(territory, false);   
+            }
         }
     }
 
-    public void UpdateTerritory(TerritoryInstance territory, Color new_colour){
+    public void UpdateTerritory(TerritoryInstance territory, bool region_mode){
 
-        RenderTexture tempRT = RenderTexture.GetTemporary(rendered_territories.width, rendered_territories.height);
+        RenderTexture render_to = rendered_territories;
+        Color set_color = territory.GetFactionColour();
+        if(region_mode){
+            set_color = territory.GetRegionColour();
+            render_to = rendered_regions;
+        }
+
+        RenderTexture tempRT = RenderTexture.GetTemporary(render_to.width, render_to.height);
 
         ComputeMaterial.SetTexture("_ColourMap", MapData.Coloured);
         ComputeMaterial.SetVector("_TargetID", new Vector4(territory.definition.Colour.r/255f, territory.definition.Colour.g/255f, territory.definition.Colour.b/255f, 1f));
-        ComputeMaterial.SetColor("_NewColour", new_colour);
+        ComputeMaterial.SetColor("_NewColour", set_color);
 
-        Graphics.Blit(rendered_territories, tempRT, ComputeMaterial);
-        Graphics.Blit(tempRT, rendered_territories);
+        Graphics.Blit(render_to, tempRT, ComputeMaterial);
+        Graphics.Blit(tempRT, render_to);
         RenderTexture.ReleaseTemporary(tempRT);
 
-        territory.Clean();
+        if(!region_mode)
+            territory.Clean();
     }
 
     // INTERACTION //
 
-    public void ToggleNametags(){
-        nametags_active = !nametags_active;
-        NametagHook.gameObject.SetActive(nametags_active);
-        if(nametags_active){
+    public void FlipRenderMode(){SetRenderMode(!render_mode);}
+
+    public void SetRenderMode(bool new_mode){
+
+        if(render_mode == new_mode)
+            return;
+        
+        render_mode = new_mode;
+        NametagHook.gameObject.SetActive(render_mode);
+
+        if(render_mode){
             PlaySFX("pipboy_light_on", SoundEffectLookup);
-            RotateTags();
+            DisplayMaterial.SetTexture("_TileColours", rendered_regions);
         }
-        else
+        else{
             PlaySFX("pipboy_light_off", SoundEffectLookup);
+            DisplayMaterial.SetTexture("_TileColours", rendered_territories);
+        }
     }
 
     public void UpdateNametagRotation(float new_rot){
         nametag_rotation = -new_rot;
-        if(nametags_active)
-            RotateTags();
+        RotateTags();
     }
 
     void RotateTags(){

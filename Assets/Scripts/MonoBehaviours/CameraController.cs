@@ -80,7 +80,6 @@ public class CameraController : MonoBehaviour
         float speed_mod = base_speed;
         if(Input.GetKey(KeyCode.LeftShift)){
             speed_mod = sprint_speed;
-            target_zoom += Input.GetAxis("Zoom Axis") * zoom_speed * Time.deltaTime;
         }
         else{
             if(Input.GetKeyDown(KeyCode.DownArrow)){
@@ -100,7 +99,7 @@ public class CameraController : MonoBehaviour
         speed_mod = speed_mod * ((normalised_zoom / normalised_maximum) + 0.15f); 
         target_position += ((MovementPivot.forward * Input.GetAxis("Vertical")) + (MovementPivot.right * Input.GetAxis("Horizontal"))) * speed_mod * Time.deltaTime;
         
-        
+        target_zoom += Input.GetAxis("Zoom Axis") * zoom_speed * Time.deltaTime;
         target_zoom = Mathf.Clamp(target_zoom, minimum_height, maximal_height);
     }
 

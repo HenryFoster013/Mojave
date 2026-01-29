@@ -11,7 +11,7 @@ public class TerritorySO : ScriptableObject
     public Texture2D Source;
     public RegionSO Region;
 
-    [Header("Generated")]
+    [Header("Generated")] // Information taken from the coloured territory sheet, do not edit!!
     public Color32 Colour;
     public float MedianX;
     public float MedianY;

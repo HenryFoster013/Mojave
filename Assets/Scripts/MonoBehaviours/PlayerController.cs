@@ -14,6 +14,6 @@ public class PlayerController : MonoBehaviour
 
     void ManageKeyboardInputs(){
         if(Input.GetKeyDown("k"))
-            Map.ToggleNametags();
+            Map.FlipRenderMode();
     }
 }
