@@ -15,4 +15,4 @@ MonoBehaviour:
   Territories:
   - {fileID: 11400000, guid: ecf3fb2abce6b85799dcb6f652c7b021, type: 2}
   - {fileID: 11400000, guid: 3a55039e29075874facbfb1c56b2ba18, type: 2}
-  Colour: {r: 1, g: 0, b: 0.9957261, a: 1}
+  Colour: {r: 1, g: 0, b: 0.35822773, a: 1}

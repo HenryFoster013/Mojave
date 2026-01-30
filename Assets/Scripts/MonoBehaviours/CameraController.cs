@@ -36,8 +36,7 @@ public class CameraController : MonoBehaviour
     // VARIABLES //
 
     // Fixed Values
-    float normalised_median;
-    float normalised_maximum;
+    float normalised_median, normalised_maximum, median_maximum;
 
     // Targets
     Vector3 target_position;
@@ -55,6 +54,7 @@ public class CameraController : MonoBehaviour
         target_zoom = ZoomPivot.localPosition.y;
         normalised_median = median_bound - minimum_height;
         normalised_maximum = maximal_height - minimum_height;
+        median_maximum = maximal_height - median_bound;
         target_pivot = 0f;
     }
 
@@ -69,7 +69,7 @@ public class CameraController : MonoBehaviour
         target_rotation = standard_rotation;
 
         if(Input.GetKey(KeyCode.LeftShift))
-            target_pivot += Input.GetAxis("Rotation Axis") * rotation_speed * Time.deltaTime;
+            target_pivot += Input.GetAxisRaw("Rotation Axis") * rotation_speed * Time.deltaTime;
         else{
             if(Input.GetKeyDown(KeyCode.DownArrow)){
                 target_pivot = 0f;
@@ -88,7 +88,7 @@ public class CameraController : MonoBehaviour
         if(target_zoom < median_bound)
             target_rotation = Mathf.Lerp(bottom_rotation, standard_rotation, normalised_zoom / normalised_median);
         else
-            target_rotation = Mathf.Lerp(standard_rotation, flattened_rotation, (target_zoom - median_bound) / (maximal_height - median_bound));
+            target_rotation = Mathf.Lerp(standard_rotation, flattened_rotation, (target_zoom - median_bound) / median_maximum);
     }
 
     void SetTargetPositions(){
@@ -99,9 +99,9 @@ public class CameraController : MonoBehaviour
         }
         
         speed_mod = speed_mod * ((normalised_zoom / normalised_maximum) + 0.15f); 
-        target_position += ((MovementPivot.forward * Input.GetAxis("Vertical")) + (MovementPivot.right * Input.GetAxis("Horizontal"))) * speed_mod * Time.deltaTime;
+        target_position += Vector3.Normalize((MovementPivot.forward * Input.GetAxisRaw("Vertical")) + (MovementPivot.right * Input.GetAxisRaw("Horizontal"))) * speed_mod * Time.deltaTime;
         
-        target_zoom += Input.GetAxis("Zoom Axis") * zoom_speed * Time.deltaTime;
+        target_zoom += Input.GetAxisRaw("Zoom Axis") * zoom_speed * Time.deltaTime;
         target_zoom = Mathf.Clamp(target_zoom, minimum_height, maximal_height);
     }
 
@@ -110,6 +110,6 @@ public class CameraController : MonoBehaviour
         ZoomPivot.localPosition = Vector3.Lerp(ZoomPivot.localPosition, Vector3.up * target_zoom, Time.deltaTime * 10f);
         RotationPivot.localEulerAngles = new Vector3(Mathf.Lerp(RotationPivot.eulerAngles.x, target_rotation, Time.deltaTime * 3f), 0f, 0f);
         MovementPivot.localEulerAngles = new Vector3(0f, Mathf.LerpAngle(MovementPivot.eulerAngles.y, target_pivot, Time.deltaTime * 6f), 0f);
-        //Map.UpdateNametagRotation(MovementPivot.eulerAngles.y);
+        Map.UpdateNametagRotation(MovementPivot.eulerAngles.y);
     }
 }
