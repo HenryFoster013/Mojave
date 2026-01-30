@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 69631528}
   - component: {fileID: 69631529}
   - component: {fileID: 69631530}
+  - component: {fileID: 69631531}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -186,8 +187,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6989275f9f593ce4198abfd43fe6ba3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Cam: {fileID: 0}
   Map: {fileID: 399842565}
   SoundEffectLookup: {fileID: 11400000, guid: 1dda3427e9224534eb06b05e2f450347, type: 2}
+--- !u!114 &69631531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69631527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd46c5b331cb9b0db97e53499b7a9c8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _PlayerController: {fileID: 69631530}
+  _MapManager: {fileID: 399842565}
+  _Camera: {fileID: 2020563851}
+  ClickableLayers:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &215994648
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,6 +415,7 @@ MonoBehaviour:
   NametagPrefab: {fileID: 47175433390864634, guid: 79409b1fa3ef3b81ba6af975b7ae5dce,
     type: 3}
   NametagHook: {fileID: 388370064}
+  pointer: {fileID: 0}
 --- !u!4 &399842566
 Transform:
   m_ObjectHideFlags: 0
@@ -525,9 +546,9 @@ GameObject:
   - component: {fileID: 996500927}
   - component: {fileID: 996500926}
   - component: {fileID: 996500925}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Board
-  m_TagString: Untagged
+  m_TagString: Board
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

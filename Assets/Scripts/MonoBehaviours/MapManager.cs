@@ -20,9 +20,13 @@ public class MapManager : MonoBehaviour
 
     RenderTexture rendered_territories, rendered_regions;
     List<TerritoryInstance> territory_instances = new List<TerritoryInstance>();
+    Dictionary<Color, TerritoryInstance> colour_territories_map = new Dictionary<Color, TerritoryInstance>();
     List<NametagController> nametags = new List<NametagController>();
 
     bool render_mode; // false == Players, true == Regions
+
+    const float board_world_scale = 30f;
+    Vector3 board_offset;
     
     // SETUP //
 
@@ -45,6 +49,7 @@ public class MapManager : MonoBehaviour
     }
 
     public void SetupMap(){
+        board_offset = 0.5f * board_world_scale * new Vector3(1f,0f,1f);
         render_mode = false;
         territory_instances = MapData.GenerateInstances();
         CreateRegionMap();
@@ -53,8 +58,10 @@ public class MapManager : MonoBehaviour
     }
 
     void CreateRegionMap(){
-        foreach(TerritoryInstance territory in territory_instances)
+        foreach(TerritoryInstance territory in territory_instances){
+            colour_territories_map.Add(territory.definition.Colour, territory);
             UpdateTerritory(territory, true);
+        }
     }
 
     void CreateNameTags(){
@@ -79,9 +86,8 @@ public class MapManager : MonoBehaviour
     
     void CheckDirtyInstances(){
         foreach(TerritoryInstance territory in territory_instances){
-            if(territory.dirty){
+            if(territory.dirty)
                 UpdateTerritory(territory, false);   
-            }
         }
     }
 
@@ -137,6 +143,16 @@ public class MapManager : MonoBehaviour
     }
 
     public TerritoryInstance GetTerritoryAtPoint(Vector3 point){
+
+        Vector3 normalised_point = (point + board_offset) / board_world_scale;
+        int x = (int)(normalised_point.x * MapData.Coloured.width);
+        int y = (int)(normalised_point.z * MapData.Coloured.height);
+
+        //print(normalised_point);
+        //print(x.ToString() + ", " + y.ToString());
+
+        if(colour_territories_map.TryGetValue(MapData.Coloured.GetPixel(x, y), out TerritoryInstance territory))
+            return territory;
         return null;
     }
 }

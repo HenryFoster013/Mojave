@@ -23,8 +23,12 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Select(TerritoryInstance territory){
-        if(territory == null)
+        if(territory == null){
             Deselect();
+            print("null found!");
+            return;
+        }
+        print(territory.definition.Name);
     }
 
     public void Deselect(){
