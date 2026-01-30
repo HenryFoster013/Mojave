@@ -135,4 +135,8 @@ public class MapManager : MonoBehaviour
         foreach(NametagController tag in nametags)
             tag.UpdateRotation(new_rot);
     }
+
+    public TerritoryInstance GetTerritoryAtPoint(Vector3 point){
+        return null;
+    }
 }
