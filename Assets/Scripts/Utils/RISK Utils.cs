@@ -9,6 +9,7 @@ namespace RISK_Utils
         public TerritorySO definition {private set; get;}
         public PlayerFactionSO owner;
 
+        public bool selected {private set; get;}
         public bool dirty {private set; get;}
         public int shader_mask_index {private set; get;} = -1;
 
@@ -23,6 +24,16 @@ namespace RISK_Utils
             if(owner == new_faction)
                 return;
             owner = new_faction;
+            Dirty();
+        }
+
+        public void Select(){
+            selected = true;
+            Dirty();
+        }
+
+        public void Deselect(){
+            selected = false;
             Dirty();
         }
 

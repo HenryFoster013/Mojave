@@ -84,7 +84,7 @@ public class MapManager : MonoBehaviour
 
     // UPDATING //
     
-    void CheckDirtyInstances(){
+    public void CheckDirtyInstances(){
         foreach(TerritoryInstance territory in territory_instances){
             if(territory.dirty)
                 UpdateTerritory(territory, false);   
@@ -95,6 +95,9 @@ public class MapManager : MonoBehaviour
 
         RenderTexture render_to = rendered_territories;
         Color set_color = territory.FactionColour();
+        if(territory.selected)
+            set_color += new Color(0.33f, 0.33f, 0.33f);
+
         if(region_mode){
             set_color = territory.RegionColour();
             render_to = rendered_regions;
@@ -147,9 +150,6 @@ public class MapManager : MonoBehaviour
         Vector3 normalised_point = (point + board_offset) / board_world_scale;
         int x = (int)(normalised_point.x * MapData.Coloured.width);
         int y = (int)(normalised_point.z * MapData.Coloured.height);
-
-        //print(normalised_point);
-        //print(x.ToString() + ", " + y.ToString());
 
         if(colour_territories_map.TryGetValue(MapData.Coloured.GetPixel(x, y), out TerritoryInstance territory))
             return territory;

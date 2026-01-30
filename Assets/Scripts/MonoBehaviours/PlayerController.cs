@@ -5,13 +5,12 @@ using static SoundUtils;
 using RISK_Utils;
 
 public class PlayerController : MonoBehaviour
-{
-    [Header("Internal References")]
-    [SerializeField] Camera Cam;
-    
-    [Header("External References")]
-    [SerializeField] MapManager Map;
+{    
+    [Header("Primary References")]
+    [SerializeField] MapManager _MapManager;
     [SerializeField] SoundEffectLookupSO SoundEffectLookup;
+
+    TerritoryInstance selected_territory;
      
     void Update(){
         ManageKeyboardInputs();
@@ -19,19 +18,29 @@ public class PlayerController : MonoBehaviour
 
     void ManageKeyboardInputs(){
         if(Input.GetKeyDown("k"))
-            Map.FlipRenderMode();
+            _MapManager.FlipRenderMode();
     }
 
     public void Select(TerritoryInstance territory){
-        if(territory == null){
-            Deselect();
-            print("null found!");
+        
+        Deselect();
+
+        if(territory == null)
             return;
-        }
-        print(territory.definition.Name);
+
+        selected_territory = territory;
+
+        print(selected_territory.definition.Name);
+        selected_territory.Select();
+        _MapManager.CheckDirtyInstances();
     }
 
     public void Deselect(){
+        
+        if(selected_territory == null)
+            return;
 
+        selected_territory.Deselect();
+        _MapManager.CheckDirtyInstances();
     }
 }
