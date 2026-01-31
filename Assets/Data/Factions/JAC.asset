@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 969fb415371ff94e79914533c17aaf38, type: 3}
-  m_Name: NCR
+  m_Name: JAC
   m_EditorClassIdentifier: 
-  ID: NCR
-  Name: New California Republic
-  Colour: {r: 1, g: 0.74275315, b: 0.23113209, a: 1}
-  Flag: {fileID: 2800000, guid: 056125b9a10c8bb47bffa8fa2ca56206, type: 3}
+  ID: JAC
+  Name: Jacobstown
+  Colour: {r: 0, g: 0.6117647, b: 0.21176471, a: 1}
+  Flag: {fileID: 2800000, guid: 0b79f8ae034c698438116cd7ff10e5ff, type: 3}

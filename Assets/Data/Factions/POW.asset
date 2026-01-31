@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 969fb415371ff94e79914533c17aaf38, type: 3}
-  m_Name: BOS
+  m_Name: POW
   m_EditorClassIdentifier: 
-  ID: BOS
-  Name: Brotherhood Of Steel
-  Colour: {r: 0.6233501, g: 0.8018868, b: 0.616545, a: 1}
-  Flag: {fileID: 2800000, guid: 9905a43a0f3c2e04f8e59a4d8f059aa7, type: 3}
+  ID: POW
+  Name: Powder Gangers
+  Colour: {r: 0, g: 0.14117648, b: 1, a: 1}
+  Flag: {fileID: 2800000, guid: 5ffd7708313ca4948bc09e12b44eada5, type: 3}

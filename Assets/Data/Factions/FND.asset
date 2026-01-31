@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 969fb415371ff94e79914533c17aaf38, type: 3}
-  m_Name: KHN
+  m_Name: FND
   m_EditorClassIdentifier: 
-  ID: KHN
-  Name: Great Khans
-  Colour: {r: 0.7529412, g: 0.37254903, b: 0.3372549, a: 1}
-  Flag: {fileID: 2800000, guid: fabd874bad75125489fbcf9f7bb90b4d, type: 3}
+  ID: FND
+  Name: Fiends
+  Colour: {r: 1, g: 0.8784314, b: 0.41960785, a: 1}
+  Flag: {fileID: 2800000, guid: 8e2296328eaa47042a30abb1ec36cdf7, type: 3}

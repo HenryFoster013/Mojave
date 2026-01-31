@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 969fb415371ff94e79914533c17aaf38, type: 3}
-  m_Name: BOM
+  m_Name: NCR
   m_EditorClassIdentifier: 
-  ID: BOM
-  Name: Boomers
-  Colour: {r: 0.99031943, g: 0.7216981, b: 1, a: 1}
-  Flag: {fileID: 2800000, guid: d83a5aed6bb267d4ca5f1d05c19fd896, type: 3}
+  ID: NCR
+  Name: New California Republic
+  Colour: {r: 1, g: 0.81960785, b: 0, a: 1}
+  Flag: {fileID: 2800000, guid: 056125b9a10c8bb47bffa8fa2ca56206, type: 3}
