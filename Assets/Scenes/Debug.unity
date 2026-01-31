@@ -187,8 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6989275f9f593ce4198abfd43fe6ba3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cam: {fileID: 0}
-  Map: {fileID: 399842565}
+  _MapManager: {fileID: 399842565}
   SoundEffectLookup: {fileID: 11400000, guid: 1dda3427e9224534eb06b05e2f450347, type: 2}
 --- !u!114 &69631531
 MonoBehaviour:
@@ -415,7 +414,6 @@ MonoBehaviour:
   NametagPrefab: {fileID: 47175433390864634, guid: 79409b1fa3ef3b81ba6af975b7ae5dce,
     type: 3}
   NametagHook: {fileID: 388370064}
-  pointer: {fileID: 0}
 --- !u!4 &399842566
 Transform:
   m_ObjectHideFlags: 0
