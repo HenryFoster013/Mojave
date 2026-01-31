@@ -1,4 +1,5 @@
-# Introduction
+# Project Mojave
+## Introduction
 This is an ongoing passion project, a small strategy game based on RISK with a few changes. It's set on a single board and (will) support both local bot-play and multiplayer. Each playable colour is indicitive of a faction within the series, though there is no gameplay differences between them. Roleplay between players is encouraged.
 
 The board itself is based on the design by AMCAImaron on DeviantArt
