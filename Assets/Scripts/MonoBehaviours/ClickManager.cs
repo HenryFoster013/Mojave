@@ -60,10 +60,10 @@ public class ClickManager : MonoBehaviour{
             Ray ray = _Camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 100f, ClickableLayers)){
                 if(hit.transform.tag == "Board")
-                    _PlayerController.Select(_MapManager.GetTerritoryAtPoint(hit.point));
+                    _PlayerController.TerritoryClicked(_MapManager.GetTerritoryAtPoint(hit.point));
             }
             else
-                _PlayerController.Deselect();
+                _PlayerController.TerritoryClicked(null);
         }
 
         

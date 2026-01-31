@@ -101,7 +101,7 @@ public class CameraController : MonoBehaviour
         speed_mod = speed_mod * ((normalised_zoom / normalised_maximum) + 0.15f); 
         target_position += Vector3.Normalize((MovementPivot.forward * Input.GetAxisRaw("Vertical")) + (MovementPivot.right * Input.GetAxisRaw("Horizontal"))) * speed_mod * Time.deltaTime;
         
-        target_zoom += Input.GetAxisRaw("Zoom Axis") * zoom_speed * Time.deltaTime;
+        target_zoom += (Input.GetAxisRaw("Zoom Axis") + Input.GetAxisRaw("Mouse ScrollWheel") * 275f) * zoom_speed * Time.deltaTime;
         target_zoom = Mathf.Clamp(target_zoom, minimum_height, maximal_height);
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static SoundUtils;
 using RISK_Utils;
 
@@ -10,37 +11,84 @@ public class PlayerController : MonoBehaviour
     [SerializeField] MapManager _MapManager;
     [SerializeField] SoundEffectLookupSO SoundEffectLookup;
 
+    [Header("Modifiers")]
+    public PlayerFactionSO Faction;
+    public Action ClickAction = Action.Selection;
+    public enum Action {Selection, DebugPaint}
+
+    [Header("UI")]
+    [SerializeField] RawImage OurFlagDisplay;
+
+    [Header("Debug")]
+    public bool DebugMode;
+
     TerritoryInstance selected_territory;
+
+    // MAIN //
      
     void Update(){
         ManageKeyboardInputs();
+        UpdateFactionDisplay();
     }
+
+    // INPUTS //
 
     void ManageKeyboardInputs(){
         if(Input.GetKeyDown("k"))
             _MapManager.FlipRenderMode();
     }
 
-    public void Select(TerritoryInstance territory){
-        
+    public void TerritoryClicked(TerritoryInstance territory){
+        switch(ClickAction){
+            case Action.Selection:
+                Select(territory);
+                break;
+            case Action.DebugPaint:
+                DebugPaint(territory);
+                break;
+        }
+    }
+
+    // SELECTION //
+
+    void Select(TerritoryInstance territory){
+
+        if(ClickAction != Action.Selection)
+            return;
+
         Deselect();
 
         if(territory == null)
             return;
 
         selected_territory = territory;
-
         print(selected_territory.definition.Name);
         selected_territory.Select();
         _MapManager.CheckDirtyInstances();
     }
 
-    public void Deselect(){
-        
-        if(selected_territory == null)
+    void Deselect(){
+
+        if(selected_territory == null || ClickAction != Action.Selection)
             return;
 
         selected_territory.Deselect();
+        selected_territory = null;
+        _MapManager.CheckDirtyInstances();
+    }
+
+    // UI //
+
+    void UpdateFactionDisplay(){
+        OurFlagDisplay.texture = Faction.Flag;
+    }
+
+    // DEBUG COMMANDS //
+
+    void DebugPaint(TerritoryInstance territory){
+        if(territory == null)
+            return;
+        territory.SetOwner(Faction);
         _MapManager.CheckDirtyInstances();
     }
 }

@@ -11,7 +11,6 @@ public class PlayerFactionSO : ScriptableObject{
     public Color Colour = new Color(0f,0f,0f,1f);
 
     [Header("Flags")]
-    public Texture2D FlagFull;
-    public Texture2D FlagMini;
+    public Texture2D Flag;
 
 }
