@@ -10,6 +10,7 @@ public class TerritorySO : ScriptableObject
     public string Name;
     public Texture2D Source;
     public RegionSO Region;
+    public Material WorldItem;
 
     [Header("Generated")] // Information taken from the coloured territory sheet, do not edit!!
     public Color32 Colour;

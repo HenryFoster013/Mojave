@@ -107,6 +107,9 @@ public class MapManager : MonoBehaviour
             render_to = rendered_regions;
         }
 
+        if(territory.definition.WorldItem != null)
+            territory.definition.WorldItem.SetColor("_Base_Colour", set_color);
+
         RenderTexture tempRT = RenderTexture.GetTemporary(render_to.width, render_to.height);
 
         ComputeMaterial.SetTexture("_ColourMap", MapData.Coloured);
