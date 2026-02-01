@@ -9,6 +9,7 @@ public class PlayerFactionSO : ScriptableObject{
     public string ID;
     public string Name;
     public Color Colour = new Color(0f,0f,0f,1f);
+    public float IncompleteAlpha = 0.8f;
 
     [Header("Flags")]
     public Texture2D Flag;

@@ -95,8 +95,12 @@ public class MapManager : MonoBehaviour
 
         RenderTexture render_to = rendered_territories;
         Color set_color = territory.FactionColour();
+
+        if(!territory.region.complete && territory.owner != null)
+            set_color.a = territory.owner.IncompleteAlpha;
+
         if(territory.selected)
-            set_color += new Color(0.33f, 0.33f, 0.33f);
+            set_color.a -= 0.33f;
 
         if(region_mode){
             set_color = territory.RegionColour();

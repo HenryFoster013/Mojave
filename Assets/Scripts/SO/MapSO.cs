@@ -19,8 +19,11 @@ public class MapSO : ScriptableObject
         List<TerritoryInstance> territory_instances = new List<TerritoryInstance>();
 
         foreach(RegionSO region in Regions){
+            RegionInstance region_instance = new RegionInstance(region);
             foreach(TerritorySO territory in region.Territories){
-                territory_instances.Add(new TerritoryInstance(territory));
+                TerritoryInstance new_terri = new TerritoryInstance(territory);
+                region_instance.AddTerritory(new_terri);
+                territory_instances.Add(new_terri);
             }
         }
 
