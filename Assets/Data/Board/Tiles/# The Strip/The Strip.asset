@@ -15,6 +15,7 @@ MonoBehaviour:
   Name: The Strip
   Source: {fileID: 2800000, guid: a4f0a54dddf68bfcd82cf834570ef611, type: 3}
   Region: {fileID: 11400000, guid: 79636c4e54d687899a81df715edc96df, type: 2}
+  WorldItem: {fileID: 2100000, guid: adf447dde164b1847b337ab1ee1dd7ad, type: 2}
   Colour:
     serializedVersion: 2
     rgba: 4291231999

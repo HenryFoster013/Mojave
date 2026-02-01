@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 {    
     [Header("Primary References")]
     [SerializeField] MapManager _MapManager;
-    [SerializeField] SoundEffectLookupSO SoundEffectLookup;
+    [SerializeField] SoundEffectLookupSO SFX_Lookup;
 
     [Header("Modifiers")]
     public PlayerFactionSO Faction;
@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
         print(selected_territory.definition.Name);
         selected_territory.Select();
         _MapManager.CheckDirtyInstances();
+        PlaySFX("pipboy_select_3", SFX_Lookup);
     }
 
     void Deselect(){
@@ -75,6 +76,7 @@ public class PlayerController : MonoBehaviour
         selected_territory.Deselect();
         selected_territory = null;
         _MapManager.CheckDirtyInstances();
+        PlaySFX("pipboy_select_4", SFX_Lookup);
     }
 
     // UI //
@@ -90,5 +92,6 @@ public class PlayerController : MonoBehaviour
             return;
         territory.SetOwner(Faction);
         _MapManager.CheckDirtyInstances();
+        PlaySFX("keyboard_1", SFX_Lookup);
     }
 }

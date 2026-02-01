@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] MapManager Map;
-    [SerializeField] SoundEffectLookupSO SoundEffectLookup;
+    [SerializeField] SoundEffectLookupSO SFX_Lookup;
     
     [Header("Main")]
     [SerializeField] Transform MovementPivot;
@@ -74,14 +74,17 @@ public class CameraController : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.DownArrow)){
                 target_pivot = 0f;
                 rotation_snap = 0;
+                PlaySFX("pipboy_tab_2", SFX_Lookup);
             }
             if(Input.GetKeyDown(KeyCode.LeftArrow)){
                 rotation_snap--;
                 target_pivot = 90f * rotation_snap;
+                PlaySFX("pipboy_tab_2", SFX_Lookup);
             }
             if(Input.GetKeyDown(KeyCode.RightArrow)){
                 rotation_snap++;
                 target_pivot = 90f * rotation_snap;
+                PlaySFX("pipboy_tab_2", SFX_Lookup);
             }
         }
         
