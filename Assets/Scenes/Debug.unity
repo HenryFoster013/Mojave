@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Map: {fileID: 399842565}
-  SoundEffectLookup: {fileID: 11400000, guid: 1dda3427e9224534eb06b05e2f450347, type: 2}
+  SFX_Lookup: {fileID: 11400000, guid: 1dda3427e9224534eb06b05e2f450347, type: 2}
   MovementPivot: {fileID: 1401993590}
   ZoomPivot: {fileID: 1670616726}
   RotationPivot: {fileID: 1675045816}
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _MapManager: {fileID: 399842565}
-  SoundEffectLookup: {fileID: 11400000, guid: 1dda3427e9224534eb06b05e2f450347, type: 2}
+  SFX_Lookup: {fileID: 11400000, guid: 1dda3427e9224534eb06b05e2f450347, type: 2}
   Faction: {fileID: 11400000, guid: 741361faef9a92748802b199b98dd854, type: 2}
   ClickAction: 0
   OurFlagDisplay: {fileID: 1813242807}
@@ -452,7 +452,6 @@ MonoBehaviour:
   SoundEffectLookup: {fileID: 11400000, guid: 1dda3427e9224534eb06b05e2f450347, type: 2}
   DisplayMaterial: {fileID: 2100000, guid: 7880298ddf6506016a2570e8119e5765, type: 2}
   ComputeMaterial: {fileID: 2100000, guid: 39696c28c6e1fc688a0563db13c3fcc6, type: 2}
-  WorldItems: {fileID: 0}
   NametagPrefab: {fileID: 47175433390864634, guid: 79409b1fa3ef3b81ba6af975b7ae5dce,
     type: 3}
   NametagHook: {fileID: 388370064}

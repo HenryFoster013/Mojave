@@ -22,6 +22,7 @@ public class MapManager : MonoBehaviour
     List<TerritoryInstance> territory_instances = new List<TerritoryInstance>();
     Dictionary<Color, TerritoryInstance> colour_territories_map = new Dictionary<Color, TerritoryInstance>();
     List<NametagController> nametags = new List<NametagController>();
+    List<Material> world_item_materials = new List<Material>();
 
     bool render_mode; // false == Players, true == Regions
 
@@ -31,8 +32,17 @@ public class MapManager : MonoBehaviour
     // SETUP //
 
     void Start(){
+        Defaults();
         SetupRenders();
         SetupMap();
+    }
+
+    void Defaults(){
+        world_item_materials = new List<Material>();
+        territory_instances = new List<TerritoryInstance>();
+        colour_territories_map = new Dictionary<Color, TerritoryInstance>();
+        nametags = new List<NametagController>();
+        render_mode = false;
     }
 
     void SetupRenders(){
@@ -61,6 +71,10 @@ public class MapManager : MonoBehaviour
         foreach(TerritoryInstance territory in territory_instances){
             colour_territories_map.Add(territory.definition.Colour, territory);
             UpdateTerritory(territory, true);
+            if(territory.definition.WorldItem != null){
+                territory.definition.WorldItem.SetColor("_Region_Colour", territory.definition.Region.Colour);
+                world_item_materials.Add(territory.definition.WorldItem);
+            }
         }
     }
 
@@ -140,11 +154,14 @@ public class MapManager : MonoBehaviour
         if(render_mode){
             PlaySFX("pipboy_light_on", SoundEffectLookup);
             DisplayMaterial.SetTexture("_TileColours", rendered_regions);
+            Shader.EnableKeyword("_REGION_MODE");
         }
         else{
             PlaySFX("pipboy_light_off", SoundEffectLookup);
             DisplayMaterial.SetTexture("_TileColours", rendered_territories);
+            Shader.DisableKeyword("_REGION_MODE");
         }
+
     }
 
     public void UpdateNametagRotation(float new_rot){
