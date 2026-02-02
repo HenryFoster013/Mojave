@@ -8,6 +8,7 @@ using RISK_Utils;
 public class PlayerController : MonoBehaviour
 {    
     [Header("Primary References")]
+    [SerializeField] TerminalController _TerminalController;
     [SerializeField] MapManager _MapManager;
     [SerializeField] SoundEffectLookup SFX_Lookup;
     [SerializeField] PlayerFactionSO[] AllFactions;
@@ -17,6 +18,9 @@ public class PlayerController : MonoBehaviour
 
     Dictionary<string, TerritoryInstance> territory_map = new Dictionary<string, TerritoryInstance>();
     Dictionary<string, Faction> faction_map = new Dictionary<string, Faction>();
+
+    const string err_header = "<color:red>ERR: ";
+    const string err_footer = "</color>";
 
     public enum game_state{
         IDLE,
@@ -30,17 +34,23 @@ public class PlayerController : MonoBehaviour
         _MapManager.Create();
     }
 
+    // ----- // --- COMMANDS --- // ----- //
+
     // Of format "OBJECT:COMMAND:DATA,DATA,DATA"
     // For instance "LEGION:CLAIM:THE STRIP"
 
     public void ProcessCommand(string command){
 
         command = command.ToUpper()
-
+        
+        string to_log = err_header + "Command not recognised." + err_footer;;
         string[] aspects = command.Split(':');
         string[] data = aspects[2].Split[','];
 
         switch(aspects[1]){
+            case "ADMIN":
+                SetAdmin(data);
+                break;
             case "CLAIM":
                 Claim(GetTerritoryInstance(data[0]), GetFaction(aspects[0]));
                 break;
@@ -48,6 +58,8 @@ public class PlayerController : MonoBehaviour
                 Paint(GetTerritoryInstance(data[0]), GetFaction(aspects[0]));
                 break;
         }
+
+        _TerminalController.LogLine(to_log);
     }
 
     // Command Stringification
@@ -75,16 +87,74 @@ public class PlayerController : MonoBehaviour
         return null;    
     }
 
-    // Command Outputs
+    // Common Command Validation
 
-    void Claim(TerritoryInstance territory, PlayerFactionSO faction){
-        if(territory.owner == null)
-            Paint(territory, faction);
+    string RequireAdmin(){
+        if(!admin)
+            return err_header + "Requires admin." + err_footer;
+        return "";
+    }
+    
+    string TerritoryFactionValidation(TerritoryInstance territory, PlayerFactionSO faction){
+        if(territory == null)
+            return err_header + "Invalid territory." + err_footer;
+        if(faction == null)
+            return err_header + "Invalid faction." + err_footer;
+    }
+
+    // COMMAND ACTION //
+
+    // Management
+
+    string SetAdmin(string[] data){
+        if(data.Length == 0)
+            admin = !admin;
+        else{
+            if(data[0] == "TRUE")
+                admin = true;
+            else if(data[0] == "FALSE")
+                admin = false;
+            else
+                return err_header + "Invalid argument." + err_footer;
+        }
+
+        if(admin)
+            return "Admin mode activated";
+        else
+            return "Admin mode deactivated";
+    }
+
+    // Territory Ownership
+
+    string Claim(TerritoryInstance territory, PlayerFactionSO faction){
+
+        if(string validation = TerritoryFactionValidation(territory, faction); probe != "")
+            return validation;
+
+        if(territory.owner == null){
+            ChangeOwnership(territory, faction);
+            return faction.Name + " claimed " + territory.Name;
+        }
+
+        return err_header + "Territory already claimed." err_footer;
     }
 
     void Paint(TerritoryInstance territory, PlayerFactionSO faction){
-        territory.SetOwner(faction);
+
+        if(string admin_check = RequireAdmin(); admin_check != "")
+            return admin_check;
+        
+        if(string validation = TerritoryFactionValidation(territory, faction); probe != "")
+            return validation;
+
         territory.SetTroops(0);
+        ChangeOwnership(territory, faction);
+
+        return faction.Name + " painted " + territory.Name;
+    }
+
+    void ChangeOwnership(TerritoryInstance territory, PlayerFactionSO faction){
+        territory.SetOwner(faction);
         _MapManager.CheckDirtyInstances();
     }
 }

@@ -9,7 +9,7 @@ using TMPro;
 public class TerminalController : MonoBehaviour
 {   
     
-    public bool Admin;
+    public bool DefaultAdmin;
 
     [Header("References")]
     [SerializeField] GameManager _GameManager;
@@ -20,11 +20,12 @@ public class TerminalController : MonoBehaviour
     [SerializeField] TMP_InputField InputBox;
     [SerializeField] TMP_Text Log;
 
-    bool enabled;
+    bool enabled, admin;
 
     // Setup //
 
     void Start(){
+        admin = DefaultAdmin;
         Disable();
     }
 
@@ -56,7 +57,9 @@ public class TerminalController : MonoBehaviour
             FlipFlopEnableDisable();
     }
 
-    
+    public void LogLine(string to_log){
+        Log.text += to_log + "\n";
+    }
 
 
 }
