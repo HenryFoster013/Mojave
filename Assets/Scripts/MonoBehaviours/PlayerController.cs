@@ -90,8 +90,7 @@ public class PlayerController : MonoBehaviour
     void DebugPaint(TerritoryInstance territory){
         if(territory == null)
             return;
-        territory.SetOwner(Faction);
-        _MapManager.CheckDirtyInstances();
+        _GameManager.Paint(Faction.ID + ":PAINT:" + territory.name);
         PlaySFX("keyboard_1", SFX_Lookup);
     }
 }

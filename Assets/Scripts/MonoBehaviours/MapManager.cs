@@ -9,8 +9,10 @@ public class MapManager : MonoBehaviour
     [Header("Main")]
     [SerializeField] MapSO MapData;
     [SerializeField] SoundEffectLookupSO SoundEffectLookup;
+    [SerializeField] GameManager _GameManager;
 
     [Header("Rendering")]
+    [SerializeField] GameObject Board;
     [SerializeField] Material DisplayMaterial;
     [SerializeField] Material ComputeMaterial;
 
@@ -24,7 +26,7 @@ public class MapManager : MonoBehaviour
     List<NametagController> nametags = new List<NametagController>();
     List<Material> world_item_materials = new List<Material>();
 
-    bool render_mode; // false == Players, true == Regions
+    bool render_mode, enabled;
 
     const float board_world_scale = 30f;
     Vector3 board_offset;
@@ -32,6 +34,15 @@ public class MapManager : MonoBehaviour
     // SETUP //
 
     void Start(){
+        Disable();
+    }
+
+    public void Disable(){
+        Board.SetActive(false);
+        enabled = false;
+    }
+
+    public void Create(){
         Defaults();
         SetupRenders();
         SetupMap();
@@ -65,11 +76,15 @@ public class MapManager : MonoBehaviour
         Shader.DisableKeyword("_REGION_MODE");
         CreateRegionMap();
         CreateNameTags();
+        enabled = true;
+        Board.SetActive(true);
         CheckDirtyInstances();
     }
 
     void CreateRegionMap(){
+        Dictionary<string, TerritoryInstance> instance_map = new Dictionary<string, TerritoryInstance>();
         foreach(TerritoryInstance territory in territory_instances){
+            instance_map.Add(territory.definition.Name.ToUpper(), territory);
             colour_territories_map.Add(territory.definition.Colour, territory);
             UpdateTerritory(territory, true);
             if(territory.definition.WorldItem != null){
@@ -77,6 +92,7 @@ public class MapManager : MonoBehaviour
                 world_item_materials.Add(territory.definition.WorldItem);
             }
         }
+        _GameManager.SetTerritoryDictionary(territory_map);
     }
 
     void CreateNameTags(){
@@ -107,6 +123,9 @@ public class MapManager : MonoBehaviour
     }
 
     public void UpdateTerritory(TerritoryInstance territory, bool region_mode){
+
+        if(!enabled)
+            return;
 
         RenderTexture render_to = rendered_territories;
         Color set_color = territory.FactionColour();
@@ -145,6 +164,9 @@ public class MapManager : MonoBehaviour
 
     public void SetRenderMode(bool new_mode){
 
+        if(!enabled)
+            return;
+
         if(render_mode == new_mode)
             return;
         
@@ -166,11 +188,18 @@ public class MapManager : MonoBehaviour
     }
 
     public void UpdateNametagRotation(float new_rot){
+
+        if(!enabled)
+            return;
+
         foreach(NametagController tag in nametags)
             tag.UpdateRotation(new_rot);
     }
 
     public TerritoryInstance GetTerritoryAtPoint(Vector3 point){
+
+        if(!enabled)
+            return null;
 
         Vector3 normalised_point = (point + board_offset) / board_world_scale;
         int x = (int)(normalised_point.x * MapData.Coloured.width);

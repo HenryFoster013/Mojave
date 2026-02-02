@@ -49,6 +49,7 @@ namespace RISK_Utils
         public TerritorySO definition {private set; get;}
         public PlayerFactionSO owner;
         public RegionInstance region;
+        public int troops {private set; get;}
 
         public bool selected {private set; get;}
         public bool dirty {private set; get;}
@@ -81,6 +82,12 @@ namespace RISK_Utils
 
         public void Dirty(){dirty = true;}
         public void Clean(){dirty = false;}
+
+        public void SetTroops(int amount){
+            if(amount < 0)
+                return;
+            troops = amount;
+        }
 
         // Getters //
 
