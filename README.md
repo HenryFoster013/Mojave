@@ -12,5 +12,6 @@ The project is made in Unity version 2021.3.45f2 as it is my preferred LTS relea
 This christmas break, I had some spare time so I built a homemade RISK board based on the Fallout series. Me and a few of my (nerdier) friends all love RISK, the sessions were great even if they did get a little larpy. It was a lot of fun and it seems a shame to let the sessions end now that we've moved back out for University, so I started this as an effort to digitise the board; so we can still play the odd game despite the distance.
 
 My physical board, currently hanging on my wall: 
+<img width="1000" height="1000" alt="image" src="https://github.com/user-attachments/assets/0a3a21da-6198-4c05-ba3b-48fdd32005a0" />
 
 I love strategy games and I've always wanted to make a digital verison of RISK, I've attempted a few times and never felt I had the technical know-how to complete it. After completing my previous project Colonial, and doing some research into how games such a CK3 work; I've felt pretty inspired to give it another shot. This is just a casual passion project, I don't have any big plans for releases or a schedule or anything so just bare with me.
