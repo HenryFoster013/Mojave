@@ -50,9 +50,6 @@
             "m_Id": "06310f7eec6649eabc96859d96e5ce92"
         },
         {
-            "m_Id": "b5afded9e34d4c05bfb40a8b5a8636ec"
-        },
-        {
             "m_Id": "6707262438d644b8b5ef04af45114034"
         },
         {
@@ -198,20 +195,6 @@
                     "m_Id": "db6b7a0f94ba4a2eb431d0fffbb2bad2"
                 },
                 "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
-                    "m_Id": "b5afded9e34d4c05bfb40a8b5a8636ec"
-                },
-                "m_SlotId": 0
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "666405c1b1b74042b3dcc51dfab9edf4"
-                },
-                "m_SlotId": 3
             }
         },
         {
@@ -380,21 +363,6 @@
         },
         "mode": 0
     }
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "07a4888182ac4080853f1ae70d3699be",
-    "m_Id": 0,
-    "m_DisplayName": "Darkness",
-    "m_SlotType": 1,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Out",
-    "m_StageCapability": 3,
-    "m_Value": 0.0,
-    "m_DefaultValue": 0.0,
-    "m_Labels": []
 }
 
 {
@@ -798,7 +766,7 @@
         "a": 0.0
     },
     "isMainColor": false,
-    "m_ColorMode": 0
+    "m_ColorMode": 1
 }
 
 {
@@ -1290,41 +1258,6 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
-    "m_ObjectId": "b5afded9e34d4c05bfb40a8b5a8636ec",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "Property",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": -788.0000610351563,
-            "y": 608.0,
-            "width": 124.00006103515625,
-            "height": 34.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "07a4888182ac4080853f1ae70d3699be"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_Property": {
-        "m_Id": "5362a94197ae4913b9cee14948976af4"
-    }
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.Rendering.Universal.ShaderGraph.UniversalUnlitSubTarget",
     "m_ObjectId": "ba7eddd89d744b268ab3f1665805452b"
 }
@@ -1695,7 +1628,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "Opacity",
     "m_StageCapability": 3,
-    "m_Value": 1.0,
+    "m_Value": 0.5,
     "m_DefaultValue": 1.0,
     "m_Labels": []
 }

@@ -62,6 +62,7 @@ public class MapManager : MonoBehaviour
         board_offset = 0.5f * board_world_scale * new Vector3(1f,0f,1f);
         render_mode = false;
         territory_instances = MapData.GenerateInstances();
+        Shader.DisableKeyword("_REGION_MODE");
         CreateRegionMap();
         CreateNameTags();
         CheckDirtyInstances();

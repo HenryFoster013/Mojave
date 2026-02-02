@@ -15,6 +15,7 @@ MonoBehaviour:
   Name: Yangtze Memorial
   Source: {fileID: 2800000, guid: 7cb391597b18c9ab6bd26a8143b072c3, type: 3}
   Region: {fileID: 11400000, guid: ec21752b6194557cf8b25a80e868ac5e, type: 2}
+  WorldItem: {fileID: 2100000, guid: 2685fa21629e68a49bef01b5aa063e0f, type: 2}
   Colour:
     serializedVersion: 2
     rgba: 4292148992

@@ -15,6 +15,7 @@ MonoBehaviour:
   Name: Repconn Test Site
   Source: {fileID: 2800000, guid: 583d208ab49fabcc6acfaf5597124de1, type: 3}
   Region: {fileID: 11400000, guid: 4181ddf16144a67a79f0eb1c5eb23ffd, type: 2}
+  WorldItem: {fileID: 2100000, guid: 5f7fa5185ccee8242a63d0b6d8e77556, type: 2}
   Colour:
     serializedVersion: 2
     rgba: 4278255435
