@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] MapManager _MapManager;
     [SerializeField] SessionManager _SessionManager;
     [SerializeField] TerminalController _TerminalController;
+    [SerializeField] ClickManager _ClickManager;
     [SerializeField] SoundEffectLookupSO SFX_Lookup;
 
     [Header("Modifiers")]
@@ -21,28 +22,38 @@ public class PlayerController : MonoBehaviour
     [Header("UI")]
     [SerializeField] RawImage OurFlagDisplay;
 
-    [HideInInspector]
-    public bool is_typing;
-
     TerritoryInstance selected_territory;
 
     // MAIN //
      
     void Update(){
+        _ClickManager.RunLogic();
         ManageKeyboardInputs();
-        UpdateFactionDisplay();
+        _CameraController.RunLogic(_TerminalController.Focused());
+        //UpdateFactionDisplay();
     }
 
     // INPUTS //
 
     void ManageKeyboardInputs(){
+        if(_TerminalController.Focused())
+            TerminalKeyboardControls();
+        else
+            GenericKeyboardControls();
+    }
 
-        is_typing = _TerminalController.input_focused;
-        if(is_typing)
-            return;
-
+    void GenericKeyboardControls(){
+        if(Input.GetKeyDown("/"))
+            FlipFlopactivatedisable();  
         if(Input.GetKeyDown("k"))
             _MapManager.FlipRenderMode();
+    }
+
+    void TerminalKeyboardControls(){
+        if(Input.GetKeyDown(KeyCode.UpArrow))
+            _TerminalController.ScrollCommands(false);
+        if(Input.GetKeyDown(KeyCode.DownArrow))
+            _TerminalController.ScrollCommands(true);
     }
 
     public void TerritoryClicked(TerritoryInstance territory){

@@ -62,22 +62,8 @@ public class TerminalController : MonoBehaviour
 
     // Interaction //
 
-    void Update(){
-        KeyboardInput();
-    }
-
-    void KeyboardInput(){
-        input_focused = activated && InputBox.isFocused;
-        if(input_focused){
-            if(Input.GetKeyDown(KeyCode.UpArrow))
-                ScrollCommands(false);
-            if(Input.GetKeyDown(KeyCode.DownArrow))
-                ScrollCommands(true);
-        }
-        else{
-            if(Input.GetKeyDown("/"))
-                FlipFlopactivatedisable();  
-        }
+    public bool Focused(){
+        return activated && InputBox.isFocused;
     }
 
     public void LogLine(string to_log){

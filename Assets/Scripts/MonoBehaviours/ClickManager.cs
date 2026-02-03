@@ -21,12 +21,8 @@ public class ClickManager : MonoBehaviour{
     float mouse_down_time = 0;
     Vector3 mouse_pos, mouse_start_pos;
     bool block_worldy_clicks_buffer, click_buffer;
-    
-    void Start(){
-        
-    }
 
-    void Update(){
+    public void RunLogic(){
         ClickingLogic();
         SelectionLogic();
     }

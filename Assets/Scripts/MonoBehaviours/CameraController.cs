@@ -6,8 +6,7 @@ using static SoundUtils;
 public class CameraController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] MapManager Map;
-    [SerializeField] PlayerController _PlayerController;
+    [SerializeField] MapManager _MapManager;
     [SerializeField] SoundEffectLookupSO SFX_Lookup;
     
     [Header("Main")]
@@ -59,16 +58,15 @@ public class CameraController : MonoBehaviour
         target_pivot = 0f;
     }
 
-    void Update(){
-        SetTargetPositions();
-        SetTargetRotations();
+    void RunLogic(bool typing){
+        if(!typing){
+            SetTargetPositions();
+            SetTargetRotations();
+        }
         LerpTowards();
     }
 
     void SetTargetRotations(){
-
-        if(_PlayerController.is_typing)
-            return;
 
         normalised_zoom = target_zoom - minimum_height;
         target_rotation = standard_rotation;
@@ -101,9 +99,6 @@ public class CameraController : MonoBehaviour
 
     void SetTargetPositions(){
 
-        if(_PlayerController.is_typing)
-            return;
-
         float speed_mod = base_speed;
         if(Input.GetKey(KeyCode.LeftShift)){
             speed_mod = sprint_speed;
@@ -121,6 +116,6 @@ public class CameraController : MonoBehaviour
         ZoomPivot.localPosition = Vector3.Lerp(ZoomPivot.localPosition, Vector3.up * target_zoom, Time.deltaTime * 10f);
         RotationPivot.localEulerAngles = new Vector3(Mathf.Lerp(RotationPivot.eulerAngles.x, target_rotation, Time.deltaTime * 3f), 0f, 0f);
         MovementPivot.localEulerAngles = new Vector3(0f, Mathf.LerpAngle(MovementPivot.eulerAngles.y, target_pivot, Time.deltaTime * 6f), 0f);
-        Map.UpdateNametagRotation(MovementPivot.eulerAngles.y);
+        _MapManager.UpdateNametagRotation(MovementPivot.eulerAngles.y);
     }
 }
