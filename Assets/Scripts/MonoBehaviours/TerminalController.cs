@@ -20,10 +20,13 @@ public class TerminalController : MonoBehaviour
     [SerializeField] TMP_InputField InputBox;
     [SerializeField] TMP_Text Log;
 
-    bool activated, admin;
+    bool activated, admin, second_tap;
+    int command_position = -1;
 
     [HideInInspector]
     public bool input_focused;
+
+    List<string> buffered_commands = new List<string>();
 
     // Setup //
 
@@ -59,11 +62,16 @@ public class TerminalController : MonoBehaviour
     void Update(){
 
         input_focused = activated && InputBox.isFocused;
-        if(input_focused)
-            return;
-
-        if(Input.GetKeyDown("/"))
-            FlipFlopactivatedisable();
+        if(input_focused){
+            if(Input.GetKeyDown(KeyCode.UpArrow))
+                ScrollUpCommands();
+            if(Input.GetKeyDown(KeyCode.DownArrow))
+                ScrollDownCommands();
+        }
+        else{
+            if(Input.GetKeyDown("/"))
+                FlipFlopactivatedisable();  
+        }
     }
 
     public void LogLine(string to_log){
@@ -74,7 +82,43 @@ public class TerminalController : MonoBehaviour
         if(InputBox.text == "")
             return;
         LogLine(InputBox.text);
+        buffered_commands.Add(InputBox.text);
         _SessionManager.ProcessCommand(InputBox.text);
         InputBox.text = "";
+        second_tap = false;
+    }
+
+    void ScrollUpCommands(){
+        if(buffered_commands.Count == 0)
+            return;
+
+        if(!second_tap){
+            second_tap = true;
+            command_position = buffered_commands.Count -1;
+        } 
+        else{
+            command_position--;
+            if(command_position < 0)
+                command_position = buffered_commands.Count - 1;
+        }
+        
+        InputBox.text = buffered_commands[command_position];
+    }
+
+    void ScrollDownCommands(){
+        if(buffered_commands.Count == 0)
+            return;
+        
+        if(!second_tap){
+            second_tap = true;
+            command_position = 0;
+        } 
+        else{
+            command_position++;
+            if(command_position >= buffered_commands.Count)
+                command_position = 0;
+        }
+
+        InputBox.text = buffered_commands[command_position];
     }
 }
