@@ -5,6 +5,7 @@ using static SoundUtils;
 using RISK_Utils;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class TerminalController : MonoBehaviour
 {   
@@ -81,6 +82,13 @@ public class TerminalController : MonoBehaviour
 
     public void LogLine(string to_log){
         Log.text += to_log + "\n";
+
+        if (Log.textInfo.lineCount >= 50){
+            string[] lines = Log.text.Split('\n');
+            Log.text = string.Join("\n", lines.Skip(lines.Length / 2));
+            Log.ForceMeshUpdate();
+        }
+
         UpdateUI();
     }
 

@@ -3,6 +3,10 @@ using UnityEngine.Audio;
 
 public static class GenericUtils{
 
+    public static string ErrorWrap(string message){
+        return "<color=red>ERR: " + message + "</color>";
+    }
+
     public static void DisableAll(ref GameObject[] gameobjects){
         foreach(GameObject g in gameobjects)
             g.SetActive(false);

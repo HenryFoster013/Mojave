@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static SoundUtils;
 using RISK_Utils;
+using static GenericUtils;
 
 public class SessionManager : MonoBehaviour
 {    
@@ -18,9 +19,6 @@ public class SessionManager : MonoBehaviour
 
     Dictionary<string, TerritoryInstance> territory_map = new Dictionary<string, TerritoryInstance>();
     Dictionary<string, PlayerFactionSO> faction_map = new Dictionary<string, PlayerFactionSO>();
-
-    const string err_header = "<color=red>ERR: ";
-    const string err_footer = "</color>";
 
     public bool admin {get; private set;}
 
@@ -47,11 +45,11 @@ public class SessionManager : MonoBehaviour
 
         command = command.ToUpper();
         
-        string to_log = err_header + "Command not recognised." + err_footer;;
+        string to_log = ErrorWrap("Command not recognised.");
         string[] aspects = command.Split('.');
 
         if(aspects.Length < 3){
-            _TerminalController.LogLine(err_header + "Invalid format. Commands must include .." + err_footer);
+            _TerminalController.LogLine(ErrorWrap("Invalid format. Commands must include .."));
             return;
         }
         
@@ -101,19 +99,26 @@ public class SessionManager : MonoBehaviour
 
     string RequireAdmin(){
         if(!admin)
-            return err_header + "Requires admin." + err_footer;
+            return ErrorWrap("Requires admin.");
         return "";
     }
     
     string TerritoryFactionValidation(TerritoryInstance territory, PlayerFactionSO faction){
         if(territory == null)
-            return err_header + "Invalid territory." + err_footer;
+            return ErrorWrap("Invalid territory.");
         if(faction == null)
-            return err_header + "Invalid faction." + err_footer;
+            return ErrorWrap("Invalid faction.");
         return "";
     }
 
     // COMMAND ACTION //
+
+    // Validation //
+
+    private bool ReadError(string validation, out string result) {
+        result = validation;
+        return !string.IsNullOrEmpty(validation);
+    }
 
     // Management
 
@@ -126,7 +131,7 @@ public class SessionManager : MonoBehaviour
             else if(data[0] == "FALSE")
                 admin = false;
             else
-                return err_header + "Invalid argument." + err_footer;
+                admin = !admin;
         }
 
         if(admin)
@@ -139,31 +144,22 @@ public class SessionManager : MonoBehaviour
 
     string Claim(TerritoryInstance territory, PlayerFactionSO faction){
 
-        string validation = TerritoryFactionValidation(territory, faction);
-        if(validation != "")
-            return validation;
+        if (ReadError(TerritoryFactionValidation(territory, faction), out var error)) return error;
 
         if(territory.owner == null){
             ChangeOwnership(territory, faction);
             return faction.Name + " claimed " + territory.Name();
         }
-
-        return err_header + "Territory already claimed." + err_footer;
+        return ErrorWrap("Territory already claimed.");
     }
 
     string Paint(TerritoryInstance territory, PlayerFactionSO faction){
 
-        string validation = RequireAdmin();
-        if(validation != "")
-            return validation;
-        
-        validation = TerritoryFactionValidation(territory, faction);
-        if(validation != "")
-            return validation;
+        if (ReadError(RequireAdmin(), out var error)) return error;
+        if (ReadError(TerritoryFactionValidation(territory, faction), out var err)) return err;
 
         territory.SetTroops(0);
         ChangeOwnership(territory, faction);
-
         return faction.Name + " painted " + territory.Name();
     }
 
