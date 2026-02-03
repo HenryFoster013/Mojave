@@ -135,9 +135,9 @@ GameObject:
   - component: {fileID: 69631530}
   - component: {fileID: 69631531}
   m_Layer: 0
-  m_Name: Player
+  m_Name: ' - Player'
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -241,10 +241,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 859934074}
   - {fileID: 547341419}
-  - {fileID: 1328595190}
   - {fileID: 979746724}
+  - {fileID: 1328595190}
+  - {fileID: 859934074}
   m_Father: {fileID: 930003886}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -438,9 +438,9 @@ GameObject:
   - component: {fileID: 333054737}
   - component: {fileID: 333054740}
   m_Layer: 0
-  m_Name: Session Manager
+  m_Name: ' - Session Manager'
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -595,7 +595,7 @@ RectTransform:
   m_Children:
   - {fileID: 1722910558}
   m_Father: {fileID: 154639592}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -999,7 +999,7 @@ GameObject:
   - component: {fileID: 859934076}
   - component: {fileID: 859934075}
   m_Layer: 0
-  m_Name: Button
+  m_Name: Submit Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1019,7 +1019,7 @@ RectTransform:
   m_Children:
   - {fileID: 2141343464}
   m_Father: {fileID: 154639592}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1391,7 +1391,7 @@ RectTransform:
   m_Children:
   - {fileID: 876429095}
   m_Father: {fileID: 154639592}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1636,7 +1636,7 @@ GameObject:
   - component: {fileID: 1328595192}
   - component: {fileID: 1328595191}
   m_Layer: 0
-  m_Name: InputField (TMP)
+  m_Name: Input Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
