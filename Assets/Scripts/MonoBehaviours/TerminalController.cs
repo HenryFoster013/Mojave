@@ -12,7 +12,7 @@ public class TerminalController : MonoBehaviour
     public bool DefaultAdmin;
 
     [Header("References")]
-    [SerializeField] GameManager _GameManager;
+    [SerializeField] SessionManager _SessionManager;
     [SerializeField] SoundEffectLookupSO SFX_Lookup;
 
     [Header("UI")]
@@ -20,7 +20,10 @@ public class TerminalController : MonoBehaviour
     [SerializeField] TMP_InputField InputBox;
     [SerializeField] TMP_Text Log;
 
-    bool enabled, admin;
+    bool activated, admin;
+
+    [HideInInspector]
+    public bool input_focused;
 
     // Setup //
 
@@ -29,37 +32,49 @@ public class TerminalController : MonoBehaviour
         Disable();
     }
 
-    public void FlipFlopEnableDisable(){
-        enabled = !enabled;
+    public void FlipFlopactivatedisable(){
+        PlaySFX("pipboy_tab_1", SFX_Lookup);
+        activated = !activated;
         UpdateUI();
     }
 
     public void Disable(){
-        enabled = false;
+        activated = false;
         UpdateUI();
     }
 
     public void Enable(){
-        enabled = true;
+        activated = true;
         UpdateUI();
     }
 
     // UI //
 
     void UpdateUI(){
-        Holder.SetActive(enabled);
+        Holder.SetActive(activated);
     }
 
     // Interaction //
 
     void Update(){
-        if(Input.GetKeyDown('/'))
-            FlipFlopEnableDisable();
+
+        input_focused = activated && InputBox.isFocused;
+        if(input_focused)
+            return;
+
+        if(Input.GetKeyDown("/"))
+            FlipFlopactivatedisable();
     }
 
     public void LogLine(string to_log){
         Log.text += to_log + "\n";
     }
 
-
+    public void SubmitInput(){
+        if(InputBox.text == "")
+            return;
+        LogLine(InputBox.text);
+        _SessionManager.ProcessCommand(InputBox.text);
+        InputBox.text = "";
+    }
 }

@@ -9,7 +9,7 @@ public class MapManager : MonoBehaviour
     [Header("Main")]
     [SerializeField] MapSO MapData;
     [SerializeField] SoundEffectLookupSO SoundEffectLookup;
-    [SerializeField] GameManager _GameManager;
+    [SerializeField] SessionManager _SessionManager;
 
     [Header("Rendering")]
     [SerializeField] GameObject Board;
@@ -26,7 +26,7 @@ public class MapManager : MonoBehaviour
     List<NametagController> nametags = new List<NametagController>();
     List<Material> world_item_materials = new List<Material>();
 
-    bool render_mode, enabled;
+    bool render_mode, activated;
 
     const float board_world_scale = 30f;
     Vector3 board_offset;
@@ -39,7 +39,7 @@ public class MapManager : MonoBehaviour
 
     public void Disable(){
         Board.SetActive(false);
-        enabled = false;
+        activated = false;
     }
 
     public void Create(){
@@ -76,7 +76,7 @@ public class MapManager : MonoBehaviour
         Shader.DisableKeyword("_REGION_MODE");
         CreateRegionMap();
         CreateNameTags();
-        enabled = true;
+        activated = true;
         Board.SetActive(true);
         CheckDirtyInstances();
     }
@@ -92,7 +92,7 @@ public class MapManager : MonoBehaviour
                 world_item_materials.Add(territory.definition.WorldItem);
             }
         }
-        _GameManager.SetTerritoryDictionary(territory_map);
+        _SessionManager.SetTerritoryDictionary(instance_map);
     }
 
     void CreateNameTags(){
@@ -124,7 +124,7 @@ public class MapManager : MonoBehaviour
 
     public void UpdateTerritory(TerritoryInstance territory, bool region_mode){
 
-        if(!enabled)
+        if(!activated && !region_mode)
             return;
 
         RenderTexture render_to = rendered_territories;
@@ -164,7 +164,7 @@ public class MapManager : MonoBehaviour
 
     public void SetRenderMode(bool new_mode){
 
-        if(!enabled)
+        if(!activated)
             return;
 
         if(render_mode == new_mode)
@@ -189,7 +189,7 @@ public class MapManager : MonoBehaviour
 
     public void UpdateNametagRotation(float new_rot){
 
-        if(!enabled)
+        if(!activated)
             return;
 
         foreach(NametagController tag in nametags)
@@ -198,7 +198,7 @@ public class MapManager : MonoBehaviour
 
     public TerritoryInstance GetTerritoryAtPoint(Vector3 point){
 
-        if(!enabled)
+        if(!activated)
             return null;
 
         Vector3 normalised_point = (point + board_offset) / board_world_scale;

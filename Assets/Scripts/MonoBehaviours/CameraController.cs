@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] MapManager Map;
+    [SerializeField] PlayerController _PlayerController;
     [SerializeField] SoundEffectLookupSO SFX_Lookup;
     
     [Header("Main")]
@@ -65,6 +66,10 @@ public class CameraController : MonoBehaviour
     }
 
     void SetTargetRotations(){
+
+        if(_PlayerController.is_typing)
+            return;
+
         normalised_zoom = target_zoom - minimum_height;
         target_rotation = standard_rotation;
 
@@ -95,6 +100,9 @@ public class CameraController : MonoBehaviour
     }
 
     void SetTargetPositions(){
+
+        if(_PlayerController.is_typing)
+            return;
 
         float speed_mod = base_speed;
         if(Input.GetKey(KeyCode.LeftShift)){

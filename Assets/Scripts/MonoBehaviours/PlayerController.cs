@@ -9,18 +9,20 @@ public class PlayerController : MonoBehaviour
 {    
     [Header("Primary References")]
     [SerializeField] MapManager _MapManager;
+    [SerializeField] SessionManager _SessionManager;
+    [SerializeField] TerminalController _TerminalController;
     [SerializeField] SoundEffectLookupSO SFX_Lookup;
 
     [Header("Modifiers")]
     public PlayerFactionSO Faction;
     public Action ClickAction = Action.Selection;
-    public enum Action {Selection, DebugPaint}
+    public enum Action {Selection, Claim, Admin_Paint}
 
     [Header("UI")]
     [SerializeField] RawImage OurFlagDisplay;
 
-    [Header("Debug")]
-    public bool DebugMode;
+    [HideInInspector]
+    public bool is_typing;
 
     TerritoryInstance selected_territory;
 
@@ -34,6 +36,11 @@ public class PlayerController : MonoBehaviour
     // INPUTS //
 
     void ManageKeyboardInputs(){
+
+        is_typing = _TerminalController.input_focused;
+        if(is_typing)
+            return;
+
         if(Input.GetKeyDown("k"))
             _MapManager.FlipRenderMode();
     }
@@ -43,8 +50,11 @@ public class PlayerController : MonoBehaviour
             case Action.Selection:
                 Select(territory);
                 break;
-            case Action.DebugPaint:
-                DebugPaint(territory);
+            case Action.Claim:
+                Claim(territory);
+                break;
+            case Action.Admin_Paint:
+                Admin_Paint(territory);
                 break;
         }
     }
@@ -85,12 +95,19 @@ public class PlayerController : MonoBehaviour
         OurFlagDisplay.texture = Faction.Flag;
     }
 
-    // DEBUG COMMANDS //
+    // COMMANDS //
 
-    void DebugPaint(TerritoryInstance territory){
+    void Claim(TerritoryInstance territory){
         if(territory == null)
             return;
-        _GameManager.Paint(Faction.ID + ":PAINT:" + territory.name);
+        _SessionManager.ProcessCommand(Faction.ID + ":CLAIM:" + territory.Name());
+        PlaySFX("alert_2", SFX_Lookup);       
+    }
+
+    void Admin_Paint(TerritoryInstance territory){
+        if(territory == null)
+            return;
+        _SessionManager.ProcessCommand(Faction.ID + ":PAINT:" + territory.Name());
         PlaySFX("keyboard_1", SFX_Lookup);
     }
 }

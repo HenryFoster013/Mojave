@@ -5,22 +5,24 @@ using UnityEngine.UI;
 using static SoundUtils;
 using RISK_Utils;
 
-public class PlayerController : MonoBehaviour
+public class SessionManager : MonoBehaviour
 {    
     [Header("Primary References")]
     [SerializeField] TerminalController _TerminalController;
     [SerializeField] MapManager _MapManager;
-    [SerializeField] SoundEffectLookup SFX_Lookup;
+    [SerializeField] SoundEffectLookupSO SFX_Lookup;
     [SerializeField] PlayerFactionSO[] AllFactions;
     
     [Header("Main")]
     public game_state current_state;
 
     Dictionary<string, TerritoryInstance> territory_map = new Dictionary<string, TerritoryInstance>();
-    Dictionary<string, Faction> faction_map = new Dictionary<string, Faction>();
+    Dictionary<string, PlayerFactionSO> faction_map = new Dictionary<string, PlayerFactionSO>();
 
-    const string err_header = "<color:red>ERR: ";
+    const string err_header = "<color=red>ERR: ";
     const string err_footer = "</color>";
+
+    bool admin;
 
     public enum game_state{
         IDLE,
@@ -31,6 +33,8 @@ public class PlayerController : MonoBehaviour
     }
     
     void Start(){
+        admin = true;
+        SetFactionDictionary();
         _MapManager.Create();
     }
 
@@ -41,21 +45,27 @@ public class PlayerController : MonoBehaviour
 
     public void ProcessCommand(string command){
 
-        command = command.ToUpper()
+        command = command.ToUpper();
         
         string to_log = err_header + "Command not recognised." + err_footer;;
         string[] aspects = command.Split(':');
-        string[] data = aspects[2].Split[','];
+
+        if(aspects.Length < 2){
+            _TerminalController.LogLine(err_header + "Invalid format. Commands must include ::" + err_footer);
+            return;
+        }
+        
+        string[] data = aspects[2].Split(',');
 
         switch(aspects[1]){
             case "ADMIN":
-                SetAdmin(data);
+                to_log = SetAdmin(data);
                 break;
             case "CLAIM":
-                Claim(GetTerritoryInstance(data[0]), GetFaction(aspects[0]));
+                to_log = Claim(GetTerritoryInstance(data[0]), GetFaction(aspects[0]));
                 break;
             case "PAINT":
-                Paint(GetTerritoryInstance(data[0]), GetFaction(aspects[0]));
+                to_log = Paint(GetTerritoryInstance(data[0]), GetFaction(aspects[0]));
                 break;
         }
 
@@ -66,7 +76,7 @@ public class PlayerController : MonoBehaviour
 
     void SetFactionDictionary(){
         foreach(PlayerFactionSO faction in AllFactions)
-            faction_map.Add(faction.Name, faction);
+            faction_map.Add(faction.ID, faction);
     }
 
     public void SetTerritoryDictionary(Dictionary<string, TerritoryInstance> input_map){ // Computed externally by the map manager
@@ -82,7 +92,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public PlayerFactionSO GetFaction(string id){
-        if(faction.TryGetValue(id, out PlayerFactionSO faction))
+        if(faction_map.TryGetValue(id, out PlayerFactionSO faction))
             return faction;
         return null;    
     }
@@ -100,6 +110,7 @@ public class PlayerController : MonoBehaviour
             return err_header + "Invalid territory." + err_footer;
         if(faction == null)
             return err_header + "Invalid faction." + err_footer;
+        return "";
     }
 
     // COMMAND ACTION //
@@ -128,29 +139,32 @@ public class PlayerController : MonoBehaviour
 
     string Claim(TerritoryInstance territory, PlayerFactionSO faction){
 
-        if(string validation = TerritoryFactionValidation(territory, faction); probe != "")
+        string validation = TerritoryFactionValidation(territory, faction);
+        if(validation != "")
             return validation;
 
         if(territory.owner == null){
             ChangeOwnership(territory, faction);
-            return faction.Name + " claimed " + territory.Name;
+            return faction.Name + " claimed " + territory.Name();
         }
 
-        return err_header + "Territory already claimed." err_footer;
+        return err_header + "Territory already claimed." + err_footer;
     }
 
-    void Paint(TerritoryInstance territory, PlayerFactionSO faction){
+    string Paint(TerritoryInstance territory, PlayerFactionSO faction){
 
-        if(string admin_check = RequireAdmin(); admin_check != "")
-            return admin_check;
+        string validation = RequireAdmin();
+        if(validation != "")
+            return validation;
         
-        if(string validation = TerritoryFactionValidation(territory, faction); probe != "")
+        validation = TerritoryFactionValidation(territory, faction);
+        if(validation != "")
             return validation;
 
         territory.SetTroops(0);
         ChangeOwnership(territory, faction);
 
-        return faction.Name + " painted " + territory.Name;
+        return faction.Name + " painted " + territory.Name();
     }
 
     void ChangeOwnership(TerritoryInstance territory, PlayerFactionSO faction){
