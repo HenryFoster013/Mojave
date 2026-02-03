@@ -8,8 +8,6 @@ using TMPro;
 
 public class TerminalController : MonoBehaviour
 {   
-    
-    public bool DefaultAdmin;
 
     [Header("References")]
     [SerializeField] SessionManager _SessionManager;
@@ -17,11 +15,15 @@ public class TerminalController : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] GameObject Holder;
+    [SerializeField] TMP_Text UserTypeDisplay;
     [SerializeField] TMP_InputField InputBox;
     [SerializeField] TMP_Text Log;
 
-    bool activated, admin, second_tap;
+    bool activated, second_tap;
     int command_position = -1;
+
+    const string admin_tag = "<color=green>admin~</color>";
+    const string user_tag = "<color=orange>user~</color>";
 
     [HideInInspector]
     public bool input_focused;
@@ -31,7 +33,6 @@ public class TerminalController : MonoBehaviour
     // Setup //
 
     void Start(){
-        admin = DefaultAdmin;
         Disable();
     }
 
@@ -55,18 +56,22 @@ public class TerminalController : MonoBehaviour
 
     void UpdateUI(){
         Holder.SetActive(activated);
+        UserTypeDisplay.text = UserType();
     }
 
     // Interaction //
 
     void Update(){
+        KeyboardInput();
+    }
 
+    void KeyboardInput(){
         input_focused = activated && InputBox.isFocused;
         if(input_focused){
             if(Input.GetKeyDown(KeyCode.UpArrow))
-                ScrollUpCommands();
+                ScrollCommands(false);
             if(Input.GetKeyDown(KeyCode.DownArrow))
-                ScrollDownCommands();
+                ScrollCommands(true);
         }
         else{
             if(Input.GetKeyDown("/"))
@@ -76,49 +81,50 @@ public class TerminalController : MonoBehaviour
 
     public void LogLine(string to_log){
         Log.text += to_log + "\n";
+        UpdateUI();
     }
 
     public void SubmitInput(){
         if(InputBox.text == "")
             return;
-        LogLine(InputBox.text);
+
+        LogLine(UserType() + InputBox.text);
         buffered_commands.Add(InputBox.text);
         _SessionManager.ProcessCommand(InputBox.text);
+
         InputBox.text = "";
         second_tap = false;
     }
 
-    void ScrollUpCommands(){
-        if(buffered_commands.Count == 0)
-            return;
-
-        if(!second_tap){
-            second_tap = true;
-            command_position = buffered_commands.Count -1;
-        } 
-        else{
-            command_position--;
-            if(command_position < 0)
-                command_position = buffered_commands.Count - 1;
-        }
-        
-        InputBox.text = buffered_commands[command_position];
+    string UserType(){
+        if(_SessionManager.admin)
+            return admin_tag;
+        return user_tag;
     }
 
-    void ScrollDownCommands(){
+    void ScrollCommands(bool down){
         if(buffered_commands.Count == 0)
             return;
-        
+
         if(!second_tap){
             second_tap = true;
-            command_position = 0;
+            if(down)
+                command_position = 0;
+            else
+                command_position = buffered_commands.Count -1;
         } 
         else{
-            command_position++;
-            if(command_position >= buffered_commands.Count)
-                command_position = 0;
+            if(down)
+                command_position++;
+            else
+                command_position--;
         }
 
+        if(command_position < 0)
+            command_position = buffered_commands.Count - 1;
+        if(command_position >= buffered_commands.Count)
+            command_position = 0;
+        
         InputBox.text = buffered_commands[command_position];
     }
 }

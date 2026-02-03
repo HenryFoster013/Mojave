@@ -100,14 +100,14 @@ public class PlayerController : MonoBehaviour
     void Claim(TerritoryInstance territory){
         if(territory == null)
             return;
-        _SessionManager.ProcessCommand(Faction.ID + ":CLAIM:" + territory.Name());
+        _SessionManager.ProcessCommand(Faction.ID + ".CLAIM." + territory.Name());
         PlaySFX("alert_2", SFX_Lookup);       
     }
 
     void Admin_Paint(TerritoryInstance territory){
         if(territory == null)
             return;
-        _SessionManager.ProcessCommand(Faction.ID + ":PAINT:" + territory.Name());
+        _SessionManager.ProcessCommand(Faction.ID + ".PAINT." + territory.Name());
         PlaySFX("keyboard_1", SFX_Lookup);
     }
 }

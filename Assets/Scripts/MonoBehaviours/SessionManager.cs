@@ -22,7 +22,7 @@ public class SessionManager : MonoBehaviour
     const string err_header = "<color=red>ERR: ";
     const string err_footer = "</color>";
 
-    bool admin;
+    public bool admin {get; private set;}
 
     public enum game_state{
         IDLE,
@@ -48,14 +48,14 @@ public class SessionManager : MonoBehaviour
         command = command.ToUpper();
         
         string to_log = err_header + "Command not recognised." + err_footer;;
-        string[] aspects = command.Split(':');
+        string[] aspects = command.Split('.');
 
-        if(aspects.Length < 2){
-            _TerminalController.LogLine(err_header + "Invalid format. Commands must include ::" + err_footer);
+        if(aspects.Length < 3){
+            _TerminalController.LogLine(err_header + "Invalid format. Commands must include .." + err_footer);
             return;
         }
         
-        string[] data = aspects[2].Split(',');
+        string[] data = aspects[2].Split(':');
 
         switch(aspects[1]){
             case "ADMIN":
