@@ -8,6 +8,8 @@ using static GenericUtils;
 
 public class SessionManager : MonoBehaviour
 {    
+    public bool DefaultAdmin = true;
+    
     [Header("Primary References")]
     [SerializeField] TerminalController _TerminalController;
     [SerializeField] MapManager _MapManager;
@@ -31,7 +33,7 @@ public class SessionManager : MonoBehaviour
     }
     
     void Start(){
-        admin = true;
+        admin = DefaultAdmin;
         SetFactionDictionary();
         _MapManager.Create();
     }
