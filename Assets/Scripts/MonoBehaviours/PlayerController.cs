@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] SessionManager _SessionManager;
     [SerializeField] TerminalController _TerminalController;
     [SerializeField] ClickManager _ClickManager;
+    [SerializeField] CameraController _CameraController;
     [SerializeField] SoundEffectLookupSO SFX_Lookup;
 
     [Header("Modifiers")]
@@ -44,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
     void GenericKeyboardControls(){
         if(Input.GetKeyDown("/"))
-            FlipFlopactivatedisable();  
+            _TerminalController.FlipFlopEnabled();  
         if(Input.GetKeyDown("k"))
             _MapManager.FlipRenderMode();
     }

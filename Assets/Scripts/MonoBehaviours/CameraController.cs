@@ -58,7 +58,7 @@ public class CameraController : MonoBehaviour
         target_pivot = 0f;
     }
 
-    void RunLogic(bool typing){
+    public void RunLogic(bool typing){
         if(!typing){
             SetTargetPositions();
             SetTargetRotations();

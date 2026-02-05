@@ -37,7 +37,7 @@ public class TerminalController : MonoBehaviour
         Disable();
     }
 
-    public void FlipFlopactivatedisable(){
+    public void FlipFlopEnabled(){
         PlaySFX("pipboy_tab_1", SFX_Lookup);
         activated = !activated;
         UpdateUI();
@@ -96,7 +96,7 @@ public class TerminalController : MonoBehaviour
         return user_tag;
     }
 
-    void ScrollCommands(bool down){
+    public void ScrollCommands(bool down){
         if(buffered_commands.Count == 0)
             return;
 
