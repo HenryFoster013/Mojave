@@ -1,0 +1,21 @@
+
+// ------ // Terminal Commands // ------ //
+
+// Non-Admin //
+
+Admin - toggles admin mode
+"admin" flips current value
+"admin.VALUE" (true, false)
+
+Claim - takes a assigns a faction to a blank tiles.
+"claim.tile" local player faction claims the tile
+"claim.tile.faction" designated faction claims the tile
+
+// Admin //
+
+Change State - sets the current games state
+"state.VALUE" (idle, lobby, claimants, primary, postgame)
+
+Paint - sets tiles ownership to a faction (regardless of ownership)
+"paint.tile" local player faction paints the tile
+"paint.tile.faction" designated faction paints the tile

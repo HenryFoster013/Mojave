@@ -53,13 +53,13 @@ public class MapManager : MonoBehaviour
         territory_instances = new List<TerritoryInstance>();
         colour_territories_map = new Dictionary<Color, TerritoryInstance>();
         nametags = new List<NametagController>();
-        render_mode = false;
+        render_mode = true;
     }
 
     void SetupRenders(){
         CreateRenderedTexture(ref rendered_territories);
         CreateRenderedTexture(ref rendered_regions);
-        DisplayMaterial.SetTexture("_TileColours", rendered_territories);
+        DisplayMaterial.SetTexture("_TileColours", rendered_regions);
     }
 
     void CreateRenderedTexture(ref RenderTexture render_to){
@@ -71,9 +71,11 @@ public class MapManager : MonoBehaviour
 
     public void SetupMap(){
         board_offset = 0.5f * board_world_scale * new Vector3(1f,0f,1f);
-        render_mode = false;
         territory_instances = MapData.GenerateInstances();
-        Shader.DisableKeyword("_REGION_MODE");
+        if(!render_mode)
+            Shader.DisableKeyword("_REGION_MODE");
+        else
+            Shader.EnableKeyword("_REGION_MODE");
         CreateRegionMap();
         CreateNameTags();
         activated = true;

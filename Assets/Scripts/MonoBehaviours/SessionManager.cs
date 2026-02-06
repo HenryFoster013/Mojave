@@ -13,6 +13,7 @@ public class SessionManager : MonoBehaviour
     [Header("Primary References")]
     [SerializeField] TerminalController _TerminalController;
     [SerializeField] MapManager _MapManager;
+    [SerializeField] PlayerController _PlayerController;
     [SerializeField] SoundEffectLookupSO SFX_Lookup;
     [SerializeField] PlayerFactionSO[] AllFactions;
     
@@ -25,51 +26,115 @@ public class SessionManager : MonoBehaviour
     public bool admin {get; private set;}
 
     public enum game_state{
+        NULL,
         IDLE,
         LOBBY,
         CLAIMANTS,
         PRIMARY,
         POSTGAME
     }
-    
+
+    // ----- // INITIAL // ----- //
+
     void Start(){
         admin = DefaultAdmin;
         SetFactionDictionary();
         _MapManager.Create();
+        LoadGameState();
     }
 
-    // ----- // --- COMMANDS --- // ----- //
+    void LoadGameState(){
+        switch(current_state){
+            case game_state.LOBBY:
+                LoadLobby();
+                break;
+            case game_state.CLAIMANTS:
+                LoadClaimants();
+                break;
+        }
+    }
 
-    // Of format "OBJECT:COMMAND:DATA,DATA,DATA"
-    // For instance "LEGION:CLAIM:THE STRIP"
+    void LoadLobby(){ }
 
-    public void ProcessCommand(string command){
+    void LoadClaimants(){ }
 
-        command = command.ToUpper();
+    void LoadPrimary(){ }
+
+    void LoadPostgame(){ }
+
+    // ----- // UPDATE // ----- //
+
+    void Update(){
+        IdleLogic();
+        GameStateFunctionality();
+    }
+
+    void IdleLogic(){
+        if(Input.GetKeyDown("/"))
+            _TerminalController.FlipFlopEnabled(); 
+        if(_TerminalController.Focused()){
+            if(Input.GetKeyDown(KeyCode.UpArrow))
+                _TerminalController.ScrollCommands(false);
+            if(Input.GetKeyDown(KeyCode.DownArrow))
+                _TerminalController.ScrollCommands(true);
+        }
+    }
+    
+    void GameStateFunctionality(){
+        switch(current_state){
+            case game_state.LOBBY:
+                LobbyUpdate();
+                break;
+            case game_state.CLAIMANTS:
+                ClaimantUpdate();
+                break;
+        }
+    }
+
+    void LobbyUpdate(){ }
+
+    void ClaimantUpdate(){
+        _PlayerController.RunLogic();
+    }
+
+    void PrimaryUpdate(){ }
+
+    void PostgameUpdate(){ }
+
+    // ----- // --- COMMAND MANAGEMENT --- // ----- //
+
+    // Of format "COMMAND.VALUE.VALUE.VALUE"
+    // For instance "CLAIM.THE STRIP.LEGION"
+    // Commands automatically formatted to uppercase
+
+    public void ProcessCommand(string input_command){
+
+        input_command = input_command.ToUpper();
         
         string to_log = ErrorWrap("Command not recognised.");
-        string[] aspects = command.Split('.');
+        string[] commands = input_command.Split('.');
 
-        if(aspects.Length < 3){
-            _TerminalController.LogLine(ErrorWrap("Invalid format. Commands must include .."));
-            return;
-        }
-        
-        string[] data = aspects[2].Split(':');
-
-        switch(aspects[1]){
+        switch(commands[0]){
             case "ADMIN":
-                to_log = SetAdmin(data);
+                to_log = SetAdmin(commands);
                 break;
             case "CLAIM":
-                to_log = Claim(GetTerritoryInstance(data[0]), GetFaction(aspects[0]));
+                to_log = Claim(commands);
                 break;
             case "PAINT":
-                to_log = Paint(GetTerritoryInstance(data[0]), GetFaction(aspects[0]));
+                to_log = Paint(commands);
+                break;
+            case "STATE":
+                to_log = ChangeState(commands);
                 break;
         }
 
         _TerminalController.LogLine(to_log);
+    }
+    
+    void ChangeOwnership(TerritoryInstance territory, PlayerFactionSO faction){
+        territory.SetOwner(faction);
+        _MapManager.CheckDirtyInstances();
     }
 
     // Command Stringification
@@ -83,8 +148,6 @@ public class SessionManager : MonoBehaviour
         territory_map = input_map;
     }
 
-    // Note that it expects all to be formatted in upper case
-
     public TerritoryInstance GetTerritoryInstance(string id){
         if(territory_map.TryGetValue(id, out TerritoryInstance territory))
             return territory;
@@ -95,6 +158,17 @@ public class SessionManager : MonoBehaviour
         if(faction_map.TryGetValue(id, out PlayerFactionSO faction))
             return faction;
         return null;    
+    }
+
+    private (string error, TerritoryInstance territory, PlayerFactionSO faction) TryGetArgs(string[] commands)
+    {
+        if (commands.Length < 2)
+            return (ErrorWrap("Must denote a territory!"), null, null);
+
+        var territory = GetTerritoryInstance(commands[1]);
+        var faction = commands.Length > 2 ? GetFaction(commands[2]) : _PlayerController.OurFaction();
+
+        return (null, territory, faction);
     }
 
     // Common Command Validation
@@ -113,8 +187,6 @@ public class SessionManager : MonoBehaviour
         return "";
     }
 
-    // COMMAND ACTION //
-
     // Validation //
 
     private bool ReadError(string validation, out string result) {
@@ -122,15 +194,21 @@ public class SessionManager : MonoBehaviour
         return !string.IsNullOrEmpty(validation);
     }
 
-    // Management
+    // ----- // --- COMMAND FUNCTIONS --- // ----- //
 
-    string SetAdmin(string[] data){
-        if(data.Length == 0)
+    // Management //
+
+    /*
+        "admin" (toggles on/off).
+        "admin.VALUE" - true, false
+    */
+    string SetAdmin(string[] command){
+        if(command.Length < 2)
             admin = !admin;
         else{
-            if(data[0] == "TRUE")
+            if(command[1] == "TRUE")
                 admin = true;
-            else if(data[0] == "FALSE")
+            else if(command[1] == "FALSE")
                 admin = false;
             else
                 admin = !admin;
@@ -142,31 +220,77 @@ public class SessionManager : MonoBehaviour
             return "Admin mode deactivated";
     }
 
-    // Territory Ownership
+    /*
+        "state.VALUE" - idle, lobby, claimants, primary, postgame
+    */
+    string ChangeState(string[] commands){
+        if (ReadError(RequireAdmin(), out var adminErr)) return adminErr;
+        if(commands.Length < 2)
+            return ErrorWrap("Need to specify a state");
 
-    string Claim(TerritoryInstance territory, PlayerFactionSO faction){
+        game_state new_state = game_state.NULL;
 
-        if (ReadError(TerritoryFactionValidation(territory, faction), out var error)) return error;
+        switch(commands[1]){
+            case "LOBBY":
+                new_state = game_state.LOBBY;
+                if(new_state != current_state) LoadLobby();
+                break;
+            case "CLAIMANTS":
+                new_state = game_state.CLAIMANTS;
+                if(new_state != current_state) LoadClaimants();
+                break;
+            case "PRIMARY":
+                new_state = game_state.PRIMARY;
+                if(new_state != current_state) LoadPrimary();
+                break;
+            case "POSTGAME":
+                new_state = game_state.POSTGAME;
+                if(new_state != current_state) LoadPostgame();
+                break;
+            case "IDLE":
+                new_state = game_state.IDLE;
+                break;
+        }
 
-        if(territory.owner == null){
+        if(new_state == game_state.NULL)
+            return ErrorWrap("Unknown state.");
+
+        current_state = new_state;    
+        return $"State set to {current_state}";
+    }
+
+    // Territory Ownership //
+
+    /*
+        "claim.territory" (local users faction claims territory)
+        "claim.territory.faction" (denoted faction claims territory)
+    */
+    string Claim(string[] commands){
+        var (error, territory, faction) = TryGetArgs(commands);
+        if (error != null) return error;
+        if (ReadError(TerritoryFactionValidation(territory, faction), out var validationError)) return validationError;
+
+        if (territory.owner == null){
             ChangeOwnership(territory, faction);
-            return faction.Name + " claimed " + territory.Name();
+            return $"{faction.Name} claimed {territory.Name()}";
         }
         return ErrorWrap("Territory already claimed.");
     }
 
-    string Paint(TerritoryInstance territory, PlayerFactionSO faction){
+    /*
+        "paint.territory" (local users faction paints territory)
+        "paint.territory.faction" (denoted faction paints territory)
+    */
+    string Paint(string[] commands)
+    {
+        var (error, territory, faction) = TryGetArgs(commands);
+        if (error != null) return error;
 
-        if (ReadError(RequireAdmin(), out var error)) return error;
-        if (ReadError(TerritoryFactionValidation(territory, faction), out var err)) return err;
+        if (ReadError(RequireAdmin(), out var adminErr)) return adminErr;
+        if (ReadError(TerritoryFactionValidation(territory, faction), out var valErr)) return valErr;
 
         territory.SetTroops(0);
         ChangeOwnership(territory, faction);
-        return faction.Name + " painted " + territory.Name();
-    }
-
-    void ChangeOwnership(TerritoryInstance territory, PlayerFactionSO faction){
-        territory.SetOwner(faction);
-        _MapManager.CheckDirtyInstances();
+        return $"{faction.Name} painted {territory.Name()}";
     }
 }

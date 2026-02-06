@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     // MAIN //
      
-    void Update(){
+    public void RunLogic(){
         _ClickManager.RunLogic();
         ManageKeyboardInputs();
         _CameraController.RunLogic(_TerminalController.Focused());
@@ -37,24 +37,13 @@ public class PlayerController : MonoBehaviour
     // INPUTS //
 
     void ManageKeyboardInputs(){
-        if(_TerminalController.Focused())
-            TerminalKeyboardControls();
-        else
+        if(!_TerminalController.Focused())
             GenericKeyboardControls();
     }
 
-    void GenericKeyboardControls(){
-        if(Input.GetKeyDown("/"))
-            _TerminalController.FlipFlopEnabled();  
+    void GenericKeyboardControls(){ 
         if(Input.GetKeyDown("k"))
             _MapManager.FlipRenderMode();
-    }
-
-    void TerminalKeyboardControls(){
-        if(Input.GetKeyDown(KeyCode.UpArrow))
-            _TerminalController.ScrollCommands(false);
-        if(Input.GetKeyDown(KeyCode.DownArrow))
-            _TerminalController.ScrollCommands(true);
     }
 
     public void TerritoryClicked(TerritoryInstance territory){
@@ -121,5 +110,13 @@ public class PlayerController : MonoBehaviour
             return;
         OurInstance.Speak(OurInstance.Faction.ID + ".PAINT." + territory.Name());
         PlaySFX("keyboard_1", SFX_Lookup);
+    }
+
+    // GETTERS //
+
+    public PlayerFactionSO OurFaction(){
+        if(OurInstance == null)
+            return null;
+        return OurInstance.Faction;
     }
 }
