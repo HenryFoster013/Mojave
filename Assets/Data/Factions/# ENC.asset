@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: ENC
   Name: Enclave
+  Description: After a devestating defeat at the battle of Navarro, the remnants
+    of the Enclave are left scattered to the sands. Carrying an undying loyalty to
+    the old world, whispers of the fallen titan still reign fear across the mutants
+    of the wasteland.
   Colour: {r: 1, g: 0.81960785, b: 0, a: 1}
   IncompleteAlpha: 0.75
   Flag: {fileID: 2800000, guid: 70f79a391c7821a48b25e37f2def79b1, type: 3}

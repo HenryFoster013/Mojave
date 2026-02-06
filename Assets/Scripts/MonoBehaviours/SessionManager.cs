@@ -54,9 +54,13 @@ public class SessionManager : MonoBehaviour
         }
     }
 
-    void LoadLobby(){ }
+    void LoadLobby(){
+        _MapManager.SetRenderMode(true, false);
+    }
 
-    void LoadClaimants(){ }
+    void LoadClaimants(){
+       _MapManager.SetRenderMode(false, false);
+    }
 
     void LoadPrimary(){ }
 

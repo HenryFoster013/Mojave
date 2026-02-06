@@ -162,13 +162,12 @@ public class MapManager : MonoBehaviour
 
     // INTERACTION //
 
-    public void FlipRenderMode(){SetRenderMode(!render_mode);}
+    public void FlipRenderMode(){SetRenderMode(!render_mode, true);}
 
-    public void SetRenderMode(bool new_mode){
+    public void SetRenderMode(bool new_mode, bool sfx){
 
         if(!activated)
             return;
-
         if(render_mode == new_mode)
             return;
         
@@ -177,16 +176,15 @@ public class MapManager : MonoBehaviour
             tag.UpdateMode(render_mode);
 
         if(render_mode){
-            PlaySFX("pipboy_light_on", SoundEffectLookup);
+            if(sfx) PlaySFX("pipboy_light_on", SoundEffectLookup);
             DisplayMaterial.SetTexture("_TileColours", rendered_regions);
             Shader.EnableKeyword("_REGION_MODE");
         }
         else{
-            PlaySFX("pipboy_light_off", SoundEffectLookup);
+            if(sfx) PlaySFX("pipboy_light_off", SoundEffectLookup);
             DisplayMaterial.SetTexture("_TileColours", rendered_territories);
             Shader.DisableKeyword("_REGION_MODE");
         }
-
     }
 
     public void UpdateNametagRotation(float new_rot){
