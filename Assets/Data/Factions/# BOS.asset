@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: '# BOS'
   m_EditorClassIdentifier: 
   ID: BOS
-  Name: Brotherhood Of Steel
+  Name: The Brotherhood Of Steel
+  PreviewImage: {fileID: 2800000, guid: bc45d05d81a6595498b4e1e988b2725d, type: 3}
+  Description: Buried below Hidden Valley; the Brotherhood's codex collects dust
+    after years of self-imposed exile. Tension rises between the ranks, the aging
+    leadership believes they need time to lick their wounds, whilst the new demands
+    action before the world they intended to save forgets they ever existed.
   Colour: {r: 0.70980394, g: 0, b: 0.94509804, a: 1}
   IncompleteAlpha: 0.7
   Flag: {fileID: 2800000, guid: 9905a43a0f3c2e04f8e59a4d8f059aa7, type: 3}

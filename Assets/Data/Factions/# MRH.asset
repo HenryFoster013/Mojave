@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: MRH
   Name: Mr. House
+  PreviewImage: {fileID: 2800000, guid: 68afc75c0e3efc744ab6cb3e33bcd11a, type: 3}
+  Description: Robert House sits upon his empire of sin from his cryonic throne within
+    the Lucky 38. An army of mechanical securitrons lay dormant beneath his paradise;
+    a reminder of the stakes he's prepared to gamble to ensure his independance remains
+    fortified.
   Colour: {r: 0, g: 0.14117648, b: 1, a: 1}
   IncompleteAlpha: 0.8
   Flag: {fileID: 2800000, guid: 5c1304c0ab1e01742a5fe5f84270ebcb, type: 3}

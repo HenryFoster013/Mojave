@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: LEG
   Name: Caesar's Legion
+  PreviewImage: {fileID: 2800000, guid: f98601adc19b786499715141825acd2a, type: 3}
+  Description: Eighty six tribes stand bonded in blood, falling under the order of
+    one man, the mighty Caesar. The Legion stalks the Bear from across the Colorado
+    river; with roman discipline, it waits for the perfect opportunity to sink it's
+    horns into the heart of the NCR at the Hoover Dam.
   Colour: {r: 1, g: 0, b: 0, a: 1}
   IncompleteAlpha: 0.85
   Flag: {fileID: 2800000, guid: 6cbc6e11c3e509a4198fca873e3d1604, type: 3}

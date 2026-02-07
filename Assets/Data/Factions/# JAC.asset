@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: JAC
   Name: Jacobstown
+  PreviewImage: {fileID: 2800000, guid: 0449e36bc3b3b42459b78153d02d55a5, type: 3}
+  Description: The shadows of the Master's failed experiment lurk high on the peaks
+    of Mount Charleston. Haunted by the past and hunted in the present, the Jacobstown
+    mutants look to Marcus as they stand prepared to struggle for a place to call
+    home.
   Colour: {r: 0, g: 0.7647059, b: 0.2627451, a: 1}
   IncompleteAlpha: 0.65
   Flag: {fileID: 2800000, guid: 0b79f8ae034c698438116cd7ff10e5ff, type: 3}

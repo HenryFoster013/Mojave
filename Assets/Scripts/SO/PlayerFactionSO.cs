@@ -8,6 +8,7 @@ public class PlayerFactionSO : ScriptableObject{
     [Header("Main")]
     public string ID;
     public string Name;
+    public Texture2D PreviewImage;
     [TextArea(15,10)]
     public string Description;
     public Color Colour = new Color(0f,0f,0f,1f);

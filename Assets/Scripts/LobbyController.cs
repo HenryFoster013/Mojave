@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class LobbyController : MonoBehaviour
 {
     
-    [SerializeField] Animator FlagWheel;
+    [Header("Main")]
+    [SerializeField] PlayerFactionSO[] Factions;
     
+    [Header("Display")]
+    [SerializeField] RawImage FactionDisplay;
+    [SerializeField] TMP_Text FactionDescription;
+    
+    [Header("Flags")]
+    [SerializeField] Animator FlagWheel;
     [SerializeField] RawImage[] CentreMostFlags;
     [SerializeField] RawImage[] LeftMostFlags;
     [SerializeField] RawImage[] RightMostFlags;
 
-    [SerializeField] PlayerFactionSO[] Factions;
     int faction_pointer, left_pointer, right_pointer;
     bool can_move_flags = true;
 
@@ -51,6 +58,8 @@ public class LobbyController : MonoBehaviour
             image.texture = Factions[left_pointer].Flag;
         foreach(RawImage image in RightMostFlags)
             image.texture = Factions[right_pointer].Flag;
+        FactionDescription.text = Factions[faction_pointer].Name + "\n\n" + Factions[faction_pointer].Description;
+        FactionDisplay.texture = Factions[faction_pointer].PreviewImage;
     }
 
     void UpdatePointers(){
