@@ -857,14 +857,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c6e9dba04521248b862763096b9970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Factions:
-  - {fileID: 11400000, guid: 741361faef9a92748802b199b98dd854, type: 2}
-  - {fileID: 11400000, guid: 8f73e2b87129a1948967b8631292ce5f, type: 2}
-  - {fileID: 11400000, guid: 584793aa3ecfe05489292d1db514c865, type: 2}
-  - {fileID: 11400000, guid: da50782d85d15844fb2b7f2f6d2ff6e5, type: 2}
-  - {fileID: 11400000, guid: 7e87e6cfe45dc12479c8a31f5a22e655, type: 2}
-  - {fileID: 11400000, guid: a98f43c27b0cdbe4a8de0cdf790d779e, type: 2}
-  - {fileID: 11400000, guid: 5649fe4887496f64ea5e3f87e8baa59c, type: 2}
   FactionDisplay: {fileID: 547669221}
   FactionDescription: {fileID: 474219592}
   FlagWheel: {fileID: 1217325805}
@@ -1053,15 +1045,18 @@ MonoBehaviour:
   _MapManager: {fileID: 333054737}
   _PlayerController: {fileID: 69631530}
   SFX_Lookup: {fileID: 11400000, guid: 1dda3427e9224534eb06b05e2f450347, type: 2}
-  AllFactions:
+  _LobbyController: {fileID: 294754201}
+  UseBonusFactions: 1
+  StandardFactions:
+  - {fileID: 11400000, guid: 741361faef9a92748802b199b98dd854, type: 2}
+  - {fileID: 11400000, guid: 8f73e2b87129a1948967b8631292ce5f, type: 2}
   - {fileID: 11400000, guid: 584793aa3ecfe05489292d1db514c865, type: 2}
-  - {fileID: 11400000, guid: 7e87e6cfe45dc12479c8a31f5a22e655, type: 2}
-  - {fileID: 11400000, guid: a98f43c27b0cdbe4a8de0cdf790d779e, type: 2}
   - {fileID: 11400000, guid: da50782d85d15844fb2b7f2f6d2ff6e5, type: 2}
   - {fileID: 11400000, guid: 5649fe4887496f64ea5e3f87e8baa59c, type: 2}
-  - {fileID: 11400000, guid: 8f73e2b87129a1948967b8631292ce5f, type: 2}
-  - {fileID: 11400000, guid: 741361faef9a92748802b199b98dd854, type: 2}
-  current_state: 0
+  BonusFactions:
+  - {fileID: 11400000, guid: 7e87e6cfe45dc12479c8a31f5a22e655, type: 2}
+  - {fileID: 11400000, guid: a98f43c27b0cdbe4a8de0cdf790d779e, type: 2}
+  current_state: 2
 --- !u!4 &333054739
 Transform:
   m_ObjectHideFlags: 0

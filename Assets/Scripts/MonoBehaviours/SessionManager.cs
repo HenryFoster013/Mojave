@@ -15,7 +15,14 @@ public class SessionManager : MonoBehaviour
     [SerializeField] MapManager _MapManager;
     [SerializeField] PlayerController _PlayerController;
     [SerializeField] SoundEffectLookupSO SFX_Lookup;
-    [SerializeField] PlayerFactionSO[] AllFactions;
+
+    [Header("Secondary References")]
+    [SerializeField] LobbyController _LobbyController;
+
+    [Header("Factions")]
+    public bool UseBonusFactions = false;
+    [SerializeField] List<PlayerFactionSO> StandardFactions = new List<PlayerFactionSO>();
+    [SerializeField] List<PlayerFactionSO> BonusFactions = new List<PlayerFactionSO>();
     
     [Header("Main")]
     public game_state current_state;
@@ -56,6 +63,15 @@ public class SessionManager : MonoBehaviour
 
     void LoadLobby(){
         _MapManager.SetRenderMode(true, false);
+        _LobbyController.LoadFactions(GenerateFactionsList());
+    }
+
+    List<PlayerFactionSO> GenerateFactionsList(){
+        List<PlayerFactionSO> factions = new List<PlayerFactionSO>();
+        factions.AddRange(StandardFactions);
+        if(UseBonusFactions)
+            factions.AddRange(BonusFactions);
+        return factions;
     }
 
     void LoadClaimants(){
@@ -131,6 +147,9 @@ public class SessionManager : MonoBehaviour
             case "STATE":
                 to_log = ChangeState(commands);
                 break;
+            case "BONUS FACTIONS":
+                to_log = ToggleBonusFactions(commands);
+                break;
         }
 
         _TerminalController.LogLine(to_log);
@@ -144,7 +163,9 @@ public class SessionManager : MonoBehaviour
     // Command Stringification
 
     void SetFactionDictionary(){
-        foreach(PlayerFactionSO faction in AllFactions)
+        foreach(PlayerFactionSO faction in StandardFactions)
+            faction_map.Add(faction.ID, faction);
+        foreach(PlayerFactionSO faction in BonusFactions)
             faction_map.Add(faction.ID, faction);
     }
 
@@ -193,14 +214,37 @@ public class SessionManager : MonoBehaviour
 
     // Validation //
 
-    private bool ReadError(string validation, out string result) {
+    bool ReadError(string validation, out string result) {
         result = validation;
         return !string.IsNullOrEmpty(validation);
+    }
+
+    void ToggleBooleanCommand(ref bool boolean_value, string[] commands){
+        if(commands.Length < 2)
+            boolean_value = !boolean_value;
+        else{
+            if(commands[1] == "TRUE")
+                boolean_value = true;
+            else if(commands[1] == "FALSE")
+                boolean_value = false;
+            else
+                boolean_value = !boolean_value;
+        }
     }
 
     // ----- // --- COMMAND FUNCTIONS --- // ----- //
 
     // Management //
+
+    /*
+        "bonus factions" (toggles on/off).
+        "bonus factions.VALUE" - true, false
+    */
+    string ToggleBonusFactions(string[] commands){
+        ToggleBooleanCommand(ref UseBonusFactions, commands);
+        _LobbyController.LoadFactions(GenerateFactionsList());
+        return $"Bonus factions set to {UseBonusFactions}";
+    }
 
     /*
         "admin" (toggles on/off).

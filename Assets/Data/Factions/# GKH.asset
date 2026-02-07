@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: GKH
   Name: The Great Khans
-  PreviewImage: {fileID: 0}
+  PreviewImage: {fileID: 2800000, guid: 9713f081e1ac6ad499a06b333ba6e9ee, type: 3}
   Description: Once the dominant force in the Mojave, the NCR has driven the Great
     Khans into the canyons of Red Rock. With the new Legion presence, hope has risen
     amongst the tribe of a great return to their stolen territories, whist others
