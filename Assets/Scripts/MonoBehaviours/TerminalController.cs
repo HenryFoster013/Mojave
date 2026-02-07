@@ -91,7 +91,7 @@ public class TerminalController : MonoBehaviour
     }
 
     string UserType(){
-        if(_SessionManager.admin)
+        if(_SessionManager.Admin())
             return admin_tag;
         return user_tag;
     }

@@ -8,8 +8,12 @@ public class LobbyController : MonoBehaviour
 {
     
     [Header("Main")]
+    [SerializeField] GameObject UI_Holder;
     
     [Header("Display")]
+    [SerializeField] RectTransform FactionColumn;
+    [SerializeField] GameObject SingleplayerUI;
+    [SerializeField] GameObject MultiplayerUI;
     [SerializeField] RawImage FactionDisplay;
     [SerializeField] TMP_Text FactionDescription;
     
@@ -24,12 +28,29 @@ public class LobbyController : MonoBehaviour
     bool setup = false;
     List<PlayerFactionSO> factions = new List<PlayerFactionSO>();
 
+    void Start(){
+        CloseLobby();
+    }
+
+    public void CloseLobby(){
+        UI_Holder.SetActive(false);
+    }
+
+    public void RefreshUIMode(bool multiplayer){
+        SingleplayerUI.SetActive(!multiplayer);
+        MultiplayerUI.SetActive(multiplayer);
+        FactionColumn.anchoredPosition = Vector3.zero;
+        if(multiplayer)
+            FactionColumn.anchoredPosition = new Vector3(110f, 0f, 0f);
+    }
+
     public void LoadFactions(List<PlayerFactionSO> passed_factions){
         factions = passed_factions;
         faction_pointer = 0;
         can_move_flags = true;
         setup = true;
         UpdateFlags();
+        UI_Holder.SetActive(true);
     }
 
     public void MovePointer(int movement){
@@ -81,4 +102,6 @@ public class LobbyController : MonoBehaviour
         if(left_pointer < 0)
             left_pointer = factions.Count - 1;
     }
+
+    public PlayerFactionSO FetchFaction(){return factions[faction_pointer];}
 }

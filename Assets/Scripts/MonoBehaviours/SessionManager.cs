@@ -24,13 +24,14 @@ public class SessionManager : MonoBehaviour
     [SerializeField] List<PlayerFactionSO> StandardFactions = new List<PlayerFactionSO>();
     [SerializeField] List<PlayerFactionSO> BonusFactions = new List<PlayerFactionSO>();
     
-    [Header("Main")]
+    [Header("Networked")]
     public game_state current_state;
+    public PlayerInstance OurInstance;
 
     Dictionary<string, TerritoryInstance> territory_map = new Dictionary<string, TerritoryInstance>();
     Dictionary<string, PlayerFactionSO> faction_map = new Dictionary<string, PlayerFactionSO>();
 
-    public bool admin {get; private set;}
+    bool admin, multiplayer_ui;
 
     public enum game_state{
         NULL,
@@ -63,6 +64,7 @@ public class SessionManager : MonoBehaviour
 
     void LoadLobby(){
         _MapManager.SetRenderMode(true, false);
+        _LobbyController.RefreshUIMode(multiplayer_ui);
         _LobbyController.LoadFactions(GenerateFactionsList());
     }
 
@@ -74,13 +76,29 @@ public class SessionManager : MonoBehaviour
         return factions;
     }
 
+    // Loading States //
+
+    void CloseAllStates(){
+        _LobbyController.CloseLobby();
+    }
+
     void LoadClaimants(){
+        CloseAllStates();
+        OurInstance.SetFaction(_LobbyController.FetchFaction());
        _MapManager.SetRenderMode(false, false);
     }
 
     void LoadPrimary(){ }
 
     void LoadPostgame(){ }
+
+    // ----- // LOCAL INSTANCE // ----- //
+
+    public PlayerFactionSO OurFaction(){
+        if(OurInstance == null)
+            return null;
+        return OurInstance.Faction;
+    }
 
     // ----- // UPDATE // ----- //
 
@@ -150,6 +168,9 @@ public class SessionManager : MonoBehaviour
             case "BONUS FACTIONS":
                 to_log = ToggleBonusFactions(commands);
                 break;
+            case "MULTIPLAYER UI":
+                to_log = ToggleMultiplayerUI(commands);
+                break;
         }
 
         _TerminalController.LogLine(to_log);
@@ -191,7 +212,7 @@ public class SessionManager : MonoBehaviour
             return (ErrorWrap("Must denote a territory!"), null, null);
 
         var territory = GetTerritoryInstance(commands[1]);
-        var faction = commands.Length > 2 ? GetFaction(commands[2]) : _PlayerController.OurFaction();
+        var faction = commands.Length > 2 ? GetFaction(commands[2]) : OurInstance.Faction;
 
         return (null, territory, faction);
     }
@@ -219,6 +240,10 @@ public class SessionManager : MonoBehaviour
         return !string.IsNullOrEmpty(validation);
     }
 
+    // ----- // --- COMMAND FUNCTIONS --- // ----- //
+
+    // Booleans //
+
     void ToggleBooleanCommand(ref bool boolean_value, string[] commands){
         if(commands.Length < 2)
             boolean_value = !boolean_value;
@@ -232,41 +257,30 @@ public class SessionManager : MonoBehaviour
         }
     }
 
-    // ----- // --- COMMAND FUNCTIONS --- // ----- //
-
-    // Management //
-
     /*
-        "bonus factions" (toggles on/off).
-        "bonus factions.VALUE" - true, false
+        all of format:
+        "boolean" (toggles on/off).
+        "boolean.VALUE" - true, false
     */
+
     string ToggleBonusFactions(string[] commands){
         ToggleBooleanCommand(ref UseBonusFactions, commands);
         _LobbyController.LoadFactions(GenerateFactionsList());
         return $"Bonus factions set to {UseBonusFactions}";
     }
 
-    /*
-        "admin" (toggles on/off).
-        "admin.VALUE" - true, false
-    */
     string SetAdmin(string[] command){
-        if(command.Length < 2)
-            admin = !admin;
-        else{
-            if(command[1] == "TRUE")
-                admin = true;
-            else if(command[1] == "FALSE")
-                admin = false;
-            else
-                admin = !admin;
-        }
-
-        if(admin)
-            return "Admin mode activated";
-        else
-            return "Admin mode deactivated";
+        ToggleBooleanCommand(ref admin, command);
+        return $"Admin mode set to {UseBonusFactions}";
     }
+
+    string ToggleMultiplayerUI(string[] command){
+        ToggleBooleanCommand(ref multiplayer_ui, command);
+        _LobbyController.RefreshUIMode(multiplayer_ui);
+        return $"Multiplayer UI set to {multiplayer_ui}";
+    }
+
+    // Management //
 
     /*
         "state.VALUE" - idle, lobby, claimants, primary, postgame
@@ -341,4 +355,8 @@ public class SessionManager : MonoBehaviour
         ChangeOwnership(territory, faction);
         return $"{faction.Name} painted {territory.Name()}";
     }
+
+    // Getters //
+
+    public bool Admin(){return admin;}
 }

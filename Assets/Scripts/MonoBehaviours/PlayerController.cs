@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] SoundEffectLookupSO SFX_Lookup;
 
     [Header("Modifiers")]
-    public PlayerInstance OurInstance;
     public Action ClickAction = Action.Selection;
     public enum Action {Selection, Claim, Admin_Paint}
 
@@ -93,7 +92,7 @@ public class PlayerController : MonoBehaviour
     // UI //
 
     void UpdateFactionDisplay(){
-        OurFlagDisplay.texture = OurInstance.Faction.Flag;
+        OurFlagDisplay.texture = OurFaction().Flag;
     }
 
     // COMMANDS //
@@ -101,22 +100,19 @@ public class PlayerController : MonoBehaviour
     void Claim(TerritoryInstance territory){
         if(territory == null)
             return;
-        OurInstance.Speak(OurInstance.Faction.ID + ".CLAIM." + territory.Name());
+        OurInstance().Speak(OurFaction().ID + ".CLAIM." + territory.Name());
         PlaySFX("alert_2", SFX_Lookup);       
     }
 
     void Admin_Paint(TerritoryInstance territory){
         if(territory == null)
             return;
-        OurInstance.Speak(OurInstance.Faction.ID + ".PAINT." + territory.Name());
+        OurInstance().Speak(OurFaction().ID + ".PAINT." + territory.Name());
         PlaySFX("keyboard_1", SFX_Lookup);
     }
 
-    // GETTERS //
+    // Shorthands //
 
-    public PlayerFactionSO OurFaction(){
-        if(OurInstance == null)
-            return null;
-        return OurInstance.Faction;
-    }
+    PlayerInstance OurInstance(){return _SessionManager.OurInstance;}
+    PlayerFactionSO OurFaction(){return _SessionManager.OurFaction();}
 }

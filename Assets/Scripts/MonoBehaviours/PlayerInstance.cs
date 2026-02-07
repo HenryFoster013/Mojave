@@ -20,4 +20,8 @@ public class PlayerInstance : MonoBehaviour
     public void Speak(string message){
         _SessionManager.ProcessCommand(message);
     }
+
+    public void SetFaction(PlayerFactionSO faction){
+        Faction = faction;
+    }
 }
