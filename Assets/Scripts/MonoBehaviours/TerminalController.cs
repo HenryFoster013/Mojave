@@ -56,6 +56,10 @@ public class TerminalController : MonoBehaviour
     // UI //
 
     void UpdateUI(){
+        if(activated){
+            InputBox.Select();
+            InputBox.ActivateInputField();
+        }
         Holder.SetActive(activated);
         UserTypeDisplay.text = UserType();
     }
