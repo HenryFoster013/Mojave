@@ -44,16 +44,12 @@ public class LobbyController : MonoBehaviour{
         if(!_SessionManager.CanAddBots())
             return;
         _SessionManager.NewBot();
-        RefreshInstanceCards();
-        RefreshButtons();
     }
 
     public void RemoveBot(){
         if(!_SessionManager.CanRemoveBots())
             return;
         _SessionManager.DestroyBot();
-        RefreshInstanceCards();
-        RefreshButtons();
     }
 
     public void CloseLobby(){

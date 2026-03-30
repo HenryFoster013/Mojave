@@ -35,7 +35,7 @@ public class SessionManager : MonoBehaviour
     Dictionary<string, TerritoryInstance> territory_map = new Dictionary<string, TerritoryInstance>();
     Dictionary<string, PlayerFactionSO> faction_map = new Dictionary<string, PlayerFactionSO>();
 
-    bool admin, multiplayer_ui;
+    bool admin;
     int player_count;
     int auto_id = -1;
 
@@ -176,8 +176,11 @@ public class SessionManager : MonoBehaviour
             case "STATE":
                 to_log = ChangeState(commands);
                 break;
-            case "MULTIPLAYER UI":
-                to_log = ToggleMultiplayerUI(commands);
+            case "ADD BOT":
+                to_log = NewBot();
+                break;
+            case "DESTROY BOT":
+                to_log = DestroyBot();
                 break;
         }
 
@@ -218,9 +221,9 @@ public class SessionManager : MonoBehaviour
         instance.SetFaction(free_factions.Dequeue());
     }
 
-    public void NewBot(){
+    public string  NewBot(){
         if(!CanAddBots())
-            return;
+            return ErrorWrap("At max bot instance capacity.");
 
         PlayerInstance new_bot = GameObject.Instantiate(PlayerInstancePrefab).GetComponent<PlayerInstance>();
         new_bot.ID = NewPlayerInstanceID();
@@ -228,16 +231,23 @@ public class SessionManager : MonoBehaviour
         new_bot.SetFaction(free_factions.Dequeue());
         new_bot._SessionManager = this;
         OtherInstances.Add(new_bot);
+        _LobbyController.RegenerateUI();
+
+        return $"{new_bot.Username} created.";
     }
 
-    public void DestroyBot(){
+    public string DestroyBot(){
         if(!CanRemoveBots())
-            return;
+            return ErrorWrap("No bots left to destroy.");
 
         PlayerInstance last_bot = OtherInstances[OtherInstances.Count - 1];
+        string bot_name = last_bot.Username;
         free_factions.Enqueue(last_bot.Faction);
         Destroy(last_bot.gameObject);
         OtherInstances.RemoveAt(OtherInstances.Count - 1);
+        _LobbyController.RegenerateUI();
+
+        return $"{bot_name} destroyed.";
     }
 
     private (string error, TerritoryInstance territory, PlayerFactionSO faction) TryGetArgs(string[] commands)
@@ -300,11 +310,6 @@ public class SessionManager : MonoBehaviour
     string SetAdmin(string[] command){
         ToggleBooleanCommand(ref admin, command);
         return $"Admin mode set to {admin}";
-    }
-
-    string ToggleMultiplayerUI(string[] command){
-        ToggleBooleanCommand(ref multiplayer_ui, command);
-        return $"Multiplayer UI set to {multiplayer_ui}";
     }
 
     // Management //
