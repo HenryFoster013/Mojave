@@ -28,7 +28,7 @@ public class InstanceCard : MonoBehaviour
 
         FlagDisplay.texture = ReferencedInstance.Faction.Flag;
         ColourDisplay.color = ReferencedInstance.Faction.Colour;
-        UsernameText.text = $"[{ReferencedInstance.Username}]";
+        UsernameText.text = ReferencedInstance.Username;
         FactionText.text = ReferencedInstance.Faction.Name;
     }
 

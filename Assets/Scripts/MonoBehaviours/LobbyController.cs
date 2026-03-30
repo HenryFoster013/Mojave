@@ -11,12 +11,18 @@ public class LobbyController : MonoBehaviour{
     
     [Header(" - UI - ")]
     [SerializeField] GameObject UI_Holder;
+    [Header("Player List")]
     [SerializeField] InstanceCard[] Cards;
+    [SerializeField] GameObject PlusButtonValid;
+    [SerializeField] GameObject MinusButtonValid;
+    [SerializeField] GameObject PlusButtonInvalid;
+    [SerializeField] GameObject MinusButtonInvalid;
     
     // Setup //
 
     public void RegenerateUI(){
         RefreshInstanceCards();
+        RefreshButtons();
     }
 
     void RefreshInstanceCards(){
@@ -25,6 +31,29 @@ public class LobbyController : MonoBehaviour{
             Cards[i].gameObject.SetActive(i - 1 < _SessionManager.OtherInstances.Count);
             Cards[i].Setup(_SessionManager.GetOtherInstance(i - 1));
         }
+    }
+
+    void RefreshButtons(){
+        PlusButtonValid.SetActive(_SessionManager.CanAddBots());
+        PlusButtonInvalid.SetActive(!_SessionManager.CanAddBots());
+        MinusButtonValid.SetActive(_SessionManager.CanRemoveBots());
+        MinusButtonInvalid.SetActive(!_SessionManager.CanRemoveBots());
+    }
+
+    public void AddBot(){
+        if(!_SessionManager.CanAddBots())
+            return;
+        _SessionManager.NewBot();
+        RefreshInstanceCards();
+        RefreshButtons();
+    }
+
+    public void RemoveBot(){
+        if(!_SessionManager.CanRemoveBots())
+            return;
+        _SessionManager.DestroyBot();
+        RefreshInstanceCards();
+        RefreshButtons();
     }
 
     public void CloseLobby(){

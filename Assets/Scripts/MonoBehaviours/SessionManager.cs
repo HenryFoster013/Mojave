@@ -23,13 +23,12 @@ public class SessionManager : MonoBehaviour
     [SerializeField] LobbyController _LobbyController;
 
     [Header("Factions")]
-    public bool UseBonusFactions = false;
-    [SerializeField] List<PlayerFactionSO> StandardFactions = new List<PlayerFactionSO>();
-    [SerializeField] List<PlayerFactionSO> BonusFactions = new List<PlayerFactionSO>();
+    [SerializeField] List<PlayerFactionSO> AllFactions = new List<PlayerFactionSO>();
     Queue<PlayerFactionSO> free_factions = new Queue<PlayerFactionSO>();
     
     [Header("Networked")]
     public game_state current_state;
+    [SerializeField] public GameObject PlayerInstancePrefab;
     public PlayerInstance OurInstance;
     public List<PlayerInstance> OtherInstances;
 
@@ -37,6 +36,8 @@ public class SessionManager : MonoBehaviour
     Dictionary<string, PlayerFactionSO> faction_map = new Dictionary<string, PlayerFactionSO>();
 
     bool admin, multiplayer_ui;
+    int player_count;
+    int auto_id = -1;
 
     public enum game_state{
         NULL,
@@ -52,9 +53,23 @@ public class SessionManager : MonoBehaviour
     void Start(){
         admin = DefaultAdmin;
         SetFactionDictionary();
-        OurInstance.SetFaction(free_factions.Dequeue());
+        SetupOurInstance();
         _MapManager.Create();
         LoadGameState();
+    }
+
+    void SetupOurInstance(){
+        OurInstance = GameObject.Instantiate(PlayerInstancePrefab).GetComponent<PlayerInstance>();
+        OurInstance.Username = "Local Player";
+        OurInstance.SetFaction(free_factions.Dequeue());
+        OurInstance.ID = NewPlayerInstanceID();
+        OurInstance._SessionManager = this;
+        player_count = 1;
+    }
+
+    int NewPlayerInstanceID(){
+        auto_id++;
+        return auto_id;
     }
 
     void LoadGameState(){
@@ -71,14 +86,6 @@ public class SessionManager : MonoBehaviour
     void LoadLobby(){
         _MapManager.SetRenderMode(true, false);
         _LobbyController.RegenerateUI();
-    }
-
-    List<PlayerFactionSO> GenerateFactionsList(){
-        List<PlayerFactionSO> factions = new List<PlayerFactionSO>();
-        factions.AddRange(StandardFactions);
-        if(UseBonusFactions)
-            factions.AddRange(BonusFactions);
-        return factions;
     }
 
     // Loading States //
@@ -169,9 +176,6 @@ public class SessionManager : MonoBehaviour
             case "STATE":
                 to_log = ChangeState(commands);
                 break;
-            case "BONUS FACTIONS":
-                to_log = ToggleBonusFactions(commands);
-                break;
             case "MULTIPLAYER UI":
                 to_log = ToggleMultiplayerUI(commands);
                 break;
@@ -188,8 +192,8 @@ public class SessionManager : MonoBehaviour
     // Command Stringification
 
     void SetFactionDictionary(){
-        free_factions = new Queue<PlayerFactionSO>(GenerateFactionsList());
-        foreach(PlayerFactionSO faction in GenerateFactionsList())
+        free_factions = new Queue<PlayerFactionSO>(AllFactions);
+        foreach(PlayerFactionSO faction in AllFactions)
             faction_map.Add(faction.ID, faction);
     }
 
@@ -212,6 +216,28 @@ public class SessionManager : MonoBehaviour
     public void SetInstanceFaction(PlayerInstance instance){
         free_factions.Enqueue(instance.Faction);
         instance.SetFaction(free_factions.Dequeue());
+    }
+
+    public void NewBot(){
+        if(!CanAddBots())
+            return;
+
+        PlayerInstance new_bot = GameObject.Instantiate(PlayerInstancePrefab).GetComponent<PlayerInstance>();
+        new_bot.ID = NewPlayerInstanceID();
+        new_bot.Username = $"[Bot #{new_bot.ID}]";
+        new_bot.SetFaction(free_factions.Dequeue());
+        new_bot._SessionManager = this;
+        OtherInstances.Add(new_bot);
+    }
+
+    public void DestroyBot(){
+        if(!CanRemoveBots())
+            return;
+
+        PlayerInstance last_bot = OtherInstances[OtherInstances.Count - 1];
+        free_factions.Enqueue(last_bot.Faction);
+        Destroy(last_bot.gameObject);
+        OtherInstances.RemoveAt(OtherInstances.Count - 1);
     }
 
     private (string error, TerritoryInstance territory, PlayerFactionSO faction) TryGetArgs(string[] commands)
@@ -271,14 +297,9 @@ public class SessionManager : MonoBehaviour
         "boolean.VALUE" - true, false
     */
 
-    string ToggleBonusFactions(string[] commands){
-        ToggleBooleanCommand(ref UseBonusFactions, commands);
-        return $"Bonus factions set to {UseBonusFactions}";
-    }
-
     string SetAdmin(string[] command){
         ToggleBooleanCommand(ref admin, command);
-        return $"Admin mode set to {UseBonusFactions}";
+        return $"Admin mode set to {admin}";
     }
 
     string ToggleMultiplayerUI(string[] command){
@@ -371,4 +392,7 @@ public class SessionManager : MonoBehaviour
             return null;
         return OtherInstances[index];
     }
+
+    public bool CanAddBots(){return OtherInstances.Count < AllFactions.Count - player_count;}
+    public bool CanRemoveBots(){return OtherInstances.Count > 0;}
 }
