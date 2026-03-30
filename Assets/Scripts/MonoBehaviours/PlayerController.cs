@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void GenericKeyboardControls(){ 
-        if(Input.GetKeyDown("k"))
+        if(Input.GetKeyDown(KeyCode.Tab))
             _MapManager.FlipRenderMode();
     }
 
@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour
     void Claim(TerritoryInstance territory){
         if(territory == null)
             return;
-        OurInstance().Speak(OurFaction().ID + ".CLAIM." + territory.Name());
+        OurInstance().Speak("CLAIM." + territory.Name() + "." + OurFaction().ID);
         PlaySFX("alert_2", SFX_Lookup);       
     }
 

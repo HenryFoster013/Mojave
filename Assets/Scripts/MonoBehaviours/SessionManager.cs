@@ -8,6 +8,9 @@ using static GenericUtils;
 
 public class SessionManager : MonoBehaviour
 {    
+    public bool Offline = true;
+    public int BotCount = 3;
+    
     public bool DefaultAdmin = true;
     
     [Header("Primary References")]
@@ -27,6 +30,7 @@ public class SessionManager : MonoBehaviour
     [Header("Networked")]
     public game_state current_state;
     public PlayerInstance OurInstance;
+    public List<PlayerInstance> OtherInstances;
 
     Dictionary<string, TerritoryInstance> territory_map = new Dictionary<string, TerritoryInstance>();
     Dictionary<string, PlayerFactionSO> faction_map = new Dictionary<string, PlayerFactionSO>();
@@ -64,8 +68,7 @@ public class SessionManager : MonoBehaviour
 
     void LoadLobby(){
         _MapManager.SetRenderMode(true, false);
-        _LobbyController.RefreshUIMode(multiplayer_ui);
-        _LobbyController.LoadFactions(GenerateFactionsList());
+        _LobbyController.RegenerateUI();
     }
 
     List<PlayerFactionSO> GenerateFactionsList(){
@@ -84,7 +87,6 @@ public class SessionManager : MonoBehaviour
 
     void LoadClaimants(){
         CloseAllStates();
-        OurInstance.SetFaction(_LobbyController.FetchFaction());
        _MapManager.SetRenderMode(false, false);
     }
 
@@ -265,7 +267,6 @@ public class SessionManager : MonoBehaviour
 
     string ToggleBonusFactions(string[] commands){
         ToggleBooleanCommand(ref UseBonusFactions, commands);
-        _LobbyController.LoadFactions(GenerateFactionsList());
         return $"Bonus factions set to {UseBonusFactions}";
     }
 
@@ -276,7 +277,6 @@ public class SessionManager : MonoBehaviour
 
     string ToggleMultiplayerUI(string[] command){
         ToggleBooleanCommand(ref multiplayer_ui, command);
-        _LobbyController.RefreshUIMode(multiplayer_ui);
         return $"Multiplayer UI set to {multiplayer_ui}";
     }
 
@@ -359,4 +359,10 @@ public class SessionManager : MonoBehaviour
     // Getters //
 
     public bool Admin(){return admin;}
+    
+    public PlayerInstance GetOtherInstance(int index){
+        if (index >= OtherInstances.Count)
+            return null;
+        return OtherInstances[index];
+    }
 }
