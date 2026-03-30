@@ -26,6 +26,7 @@ public class SessionManager : MonoBehaviour
     public bool UseBonusFactions = false;
     [SerializeField] List<PlayerFactionSO> StandardFactions = new List<PlayerFactionSO>();
     [SerializeField] List<PlayerFactionSO> BonusFactions = new List<PlayerFactionSO>();
+    Queue<PlayerFactionSO> free_factions = new Queue<PlayerFactionSO>();
     
     [Header("Networked")]
     public game_state current_state;
@@ -51,6 +52,7 @@ public class SessionManager : MonoBehaviour
     void Start(){
         admin = DefaultAdmin;
         SetFactionDictionary();
+        OurInstance.SetFaction(free_factions.Dequeue());
         _MapManager.Create();
         LoadGameState();
     }
@@ -186,9 +188,8 @@ public class SessionManager : MonoBehaviour
     // Command Stringification
 
     void SetFactionDictionary(){
-        foreach(PlayerFactionSO faction in StandardFactions)
-            faction_map.Add(faction.ID, faction);
-        foreach(PlayerFactionSO faction in BonusFactions)
+        free_factions = new Queue<PlayerFactionSO>(GenerateFactionsList());
+        foreach(PlayerFactionSO faction in GenerateFactionsList())
             faction_map.Add(faction.ID, faction);
     }
 
@@ -206,6 +207,11 @@ public class SessionManager : MonoBehaviour
         if(faction_map.TryGetValue(id, out PlayerFactionSO faction))
             return faction;
         return null;    
+    }
+
+    public void SetInstanceFaction(PlayerInstance instance){
+        free_factions.Enqueue(instance.Faction);
+        instance.SetFaction(free_factions.Dequeue());
     }
 
     private (string error, TerritoryInstance territory, PlayerFactionSO faction) TryGetArgs(string[] commands)
