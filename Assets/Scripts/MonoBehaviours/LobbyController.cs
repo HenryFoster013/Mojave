@@ -53,6 +53,11 @@ public class LobbyController : MonoBehaviour{
     }
 
     public void CloseLobby(){
+        UI_Holder.SetActive(false);
+    }
 
+    public void OpenLobby(){
+        UI_Holder.SetActive(true);
+        RegenerateUI();
     }
 }

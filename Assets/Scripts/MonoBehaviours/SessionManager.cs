@@ -85,7 +85,7 @@ public class SessionManager : MonoBehaviour
 
     void LoadLobby(){
         _MapManager.SetRenderMode(true, false);
-        _LobbyController.RegenerateUI();
+        _LobbyController.OpenLobby();
     }
 
     // Loading States //
